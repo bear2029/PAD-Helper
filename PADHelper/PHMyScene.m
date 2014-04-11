@@ -12,6 +12,9 @@
     PHOrb *currentOrb;
     float _x,_y,w,_w,h,_h;
     PHBoard *board;
+    SKLabelNode *timer;
+    NSTimer *countDownTimer;
+    float mseconds;
 }
 
 -(id)initWithSize:(CGSize)size {
@@ -41,6 +44,23 @@
     reset.text = @"reset";
     reset.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame)+80);
     [self addChild:reset];
+    [self createTimer];
+    
+}
+-(void)createTimer
+{
+    timer = [[SKLabelNode alloc]init];
+    timer.text = @"TIME: 0";
+    timer.fontSize = 15;
+    timer.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
+    timer.verticalAlignmentMode = SKLabelVerticalAlignmentModeBottom;
+    timer.position = CGPointMake(CGRectGetMidX(self.frame)-22, CGRectGetMaxY(self.frame)-50);
+    [self addChild:timer];
+}
+-(void)setTime:(NSTimer*)nstimer
+{
+    mseconds++;
+    timer.text = [NSString stringWithFormat:@"TIME: %3.2f",mseconds/100];
 }
 -(void)makeOrbs
 {
@@ -89,6 +109,12 @@
             currentOrb.yIndex = orb.yIndex;
             currentOrb.linkedOrb = orb;
             [self addChild:currentOrb];
+            mseconds = 0;
+            countDownTimer = [NSTimer scheduledTimerWithTimeInterval:.01
+                                                              target:self
+                                                            selector:@selector(setTime:)
+                                                            userInfo:nil
+                                                             repeats:YES];
             break;
         }else if([node isKindOfClass:[SKLabelNode class]]){
             SKLabelNode *label = (SKLabelNode*)node;
@@ -131,6 +157,7 @@
     if(currentOrb){
         currentOrb.linkedOrb.alpha = 1;
         [currentOrb removeFromParent];
+        [countDownTimer invalidate];
     }
 
 }
