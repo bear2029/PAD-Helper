@@ -26,12 +26,21 @@
         /* Setup your scene here */
         [self makeBackground];
         [self makeOrbs];
-        SKLabelNode *label = [[SKLabelNode alloc]init];
-        label.text = @"rand";
-        label.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame)+50);
-        [self addChild:label];
+        [self makeUtilities];
     }
     return self;
+}
+-(void)makeUtilities
+{
+    SKLabelNode *rand = [[SKLabelNode alloc]init];
+    rand.text = @"rand";
+    rand.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame)+50);
+    [self addChild:rand];
+    
+    SKLabelNode *reset = [[SKLabelNode alloc]init];
+    reset.text = @"reset";
+    reset.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame)+80);
+    [self addChild:reset];
 }
 -(void)makeOrbs
 {
@@ -85,6 +94,8 @@
             SKLabelNode *label = (SKLabelNode*)node;
             if([label.text isEqualToString:@"rand"]){
                 [board randomAssignColor];
+            }else if([label.text isEqualToString:@"reset"]){
+                [board undo];
             }
         }
     }
@@ -95,22 +106,25 @@
     if(currentOrb){
         NSArray *nodes = [self nodesAtPoint:point];
         for (SKNode *node in nodes) {
-            if([node isKindOfClass:[PHOrb class]]){
-                PHOrb *orb = (PHOrb*)node;
-                if(![orb isFromSamePosition:currentOrb]){
-                    PHOrb *lastOrb = currentOrb.linkedOrb;
-                    lastOrb.alpha = 1;
-                    currentOrb.linkedOrb = orb;
-                    currentOrb.linkedOrb.alpha = .5;
-                    lastOrb.texture = orb.texture;
-                    orb.texture = currentOrb.texture;
-                }
+            if(![node isKindOfClass:[PHOrb class]]){
+                continue;
+            }
+            PHOrb *orb = (PHOrb*)node;
+            PHOrb *lastOrb = currentOrb.linkedOrb;
+            if(orb == lastOrb || orb == currentOrb){
+                continue;
+            }
+            if(orb.isMoving || lastOrb.isMoving){
                 break;
             }
+            [board swapOrb1:lastOrb andOrb2:orb];
+            break;
+            
         }
         currentOrb.position = point;
     }
 }
+
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     //CGPoint point = [[touches anyObject]locationInNode:self];

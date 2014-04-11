@@ -10,9 +10,11 @@
 
 @implementation PHOrb
 
--(BOOL)isFromSamePosition:(PHOrb*)_orb
+-(id)init
 {
-    return self.xIndex == _orb.xIndex && self.yIndex == _orb.yIndex;
+    self.isMoving = NO;
+    self = [super init];
+    return self;
 }
 
 @end

@@ -12,7 +12,6 @@
 @property int xIndex;
 @property int yIndex;
 @property PHOrb *linkedOrb;
-
--(BOOL)isFromSamePosition:(PHOrb*)_orb;
+@property BOOL isMoving;
 
 @end
