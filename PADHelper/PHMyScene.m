@@ -69,8 +69,6 @@
             PHOrb *orb = [[PHOrb alloc]init];
             orb.size = CGSizeMake(_w, _h);
             [self setOrbPosition:orb withX:x andY:y];
-            orb.xIndex = x;
-            orb.yIndex = y;
             [self addChild:orb];
             orb.zPosition = 1;
             [board addOrb:orb OnBoardAt:x andY:y];
@@ -81,7 +79,9 @@
 
 -(void)setOrbPosition:(PHOrb*)orb withX:(float)x andY:(float)y
 {
-    orb.position = CGPointMake(_x+x*w+_w/2,_y+y*h+_h/2);
+    orb.position = CGPointMake(
+                               _x+x*w+_w/2,
+                               _y+(4-y)*h+_h/2);
 }
 -(void)makeBackground{
     SKSpriteNode *bg = [[SKSpriteNode alloc]initWithImageNamed:@"pad-bg.jpg"];
@@ -105,8 +105,6 @@
             }
             currentOrb.texture = orb.texture;
             currentOrb.position = point;
-            currentOrb.xIndex = orb.xIndex;
-            currentOrb.yIndex = orb.yIndex;
             currentOrb.linkedOrb = orb;
             [self addChild:currentOrb];
             mseconds = 0;
@@ -158,6 +156,7 @@
         currentOrb.linkedOrb.alpha = 1;
         [currentOrb removeFromParent];
         [countDownTimer invalidate];
+        [board calculateScore];
     }
 
 }

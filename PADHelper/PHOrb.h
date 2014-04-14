@@ -8,10 +8,22 @@
 
 #import <SpriteKit/SpriteKit.h>
 
+typedef enum orbTypeIds {
+    orbTypeRed = 0,
+    orbTypeGreen = 5,
+    orbTypeBlue = 2,
+    orbTypePink = 3,
+    orbTypeYellow = 4,
+    orbTypePurple = 5
+} OrbTypeIds;
+
 @interface PHOrb : SKSpriteNode
-@property int xIndex;
-@property int yIndex;
 @property PHOrb *linkedOrb;
 @property BOOL isMoving;
+@property NSString *type;
+
+-(void)setOrbColor:(NSString *)color;
+-(BOOL)isSameType:(PHOrb*)orb;
+-(int)getTypeAsInt;
 
 @end

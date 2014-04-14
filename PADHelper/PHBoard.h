@@ -9,8 +9,14 @@
 #import <Foundation/Foundation.h>
 #import "PHOrb.h"
 
+extern const int kSelectedEditData;
+
+
 @interface PHBoard : NSObject
 
+@property NSMutableDictionary *score;
+
+-(void)calculateScore;
 -(void)addOrb:(PHOrb*)orb OnBoardAt:(int)x andY:(int)y;
 -(PHOrb*)getOrbAtX:(int)x andY:(int)y;
 -(void)randomAssignColor;

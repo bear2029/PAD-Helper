@@ -16,5 +16,30 @@
     self = [super init];
     return self;
 }
+-(void)setOrbColor:(NSString *)color
+{
+    self.type = color;
+    self.texture = [SKTexture textureWithImageNamed:color];
+}
+-(BOOL)isSameType:(PHOrb*)orb
+{
+    return orb.type = self.type;
+}
+-(int)getTypeAsInt
+{
+    if([self.type isEqualToString:@"p"]){
+        return orbTypePurple;
+    }else if([self.type isEqualToString:@"r"]){
+        return orbTypeRed;
+    }else if([self.type isEqualToString:@"h"]){
+        return orbTypePink;
+    }else if([self.type isEqualToString:@"y"]){
+        return orbTypeYellow;
+    }else if([self.type isEqualToString:@"b"]){
+        return orbTypeBlue;
+    }else{ // g
+        return orbTypeGreen;
+    }
+}
 
 @end
