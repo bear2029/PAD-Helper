@@ -10,7 +10,7 @@
 
 typedef enum orbTypeIds {
     orbTypeRed = 0,
-    orbTypeGreen = 5,
+    orbTypeGreen = 1,
     orbTypeBlue = 2,
     orbTypePink = 3,
     orbTypeYellow = 4,

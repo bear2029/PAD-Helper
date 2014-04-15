@@ -14,6 +14,8 @@ const int kSelectedEditData = 1;
     NSMutableArray *orbs;
     NSMutableArray *colors;
     NSMutableArray *previousColors;
+    NSMutableDictionary *combos;
+    int intBoard[6][5];
 }
 
 -(id)init{
@@ -40,7 +42,6 @@ const int kSelectedEditData = 1;
 -(CGPoint)getPositionOfOrb:(PHOrb*)_orb
 {
     NSLog(@"get pos");
-    [self dump];
     for (int y=0; y<[orbs count]; y++) {
         NSMutableArray *row = [orbs objectAtIndex:y];
         for (int x=0; x<[row count]; x++) {
@@ -58,97 +59,98 @@ const int kSelectedEditData = 1;
 }
 -(void)calculateScore
 {
-    NSMutableArray *combos = [[NSMutableArray alloc]init];
-    combos = [self calculateHorizontalScore];
-    [combos addObjectsFromArray:[self calculateVerticalScore]];
-    for (int i=0; i<[combos count]; i++) {
-        NSArray *targetCombo = [combos objectAtIndex:i];
-        for (int j=0;j<[combos count];j++) {
-            NSArray *compareComble = [combos objectAtIndex:j];
-        }
-    }
+    [self getIntBoard];
+    combos = [[NSMutableDictionary alloc]init];
+    [self calculateHorizontalScore];
+    [self calculateVerticalScore];
     NSLog(@"%@",combos);
 }
--(NSMutableArray*)calculateHorizontalScore
+-(void)calculateHorizontalScore
 {
-    //NSMutableDictionary *score = [[NSMutableDictionary alloc]init];
-    NSMutableArray *combos = [[NSMutableArray alloc]init];
-
-    // horizontal
-    for (int y=0; y<[orbs count]; y++) {
-        NSMutableArray *row = [orbs objectAtIndex:y];
-        int _count = 1;
-        NSString *previousType;
-        for (int x=0; x<[row count]; x++) {
-            PHOrb *orb = [row objectAtIndex:x];
-            if(x==0){
-                previousType = orb.type;
-                continue;
-            }
-            if([orb.type isEqualToString: previousType]){ // equal, keep bet
-                _count++;
-                if(x>=[row count]-1 && _count>=3){ // end of the list, time to go
-                    NSMutableArray *combo = [[NSMutableArray alloc]init];
-                    for(int i=x-_count;i<=x;i++){
-                        [combo addObject:[NSValue valueWithCGPoint:CGPointMake(i, y)]];
-                    }
-                    [combos addObject:combo];
+    int previousType,count;
+    for (int y=0; y<5; y++) {
+        count = 1;
+        previousType = intBoard[0][y];
+        for (int x=1; x<6; x++) {
+            bool isComboAtEndOfRow = intBoard[x][y] == previousType && x>=5 && count>=2;
+            bool isComboJustBroke = intBoard[x][y] != previousType && count>=3;
+            if(isComboAtEndOfRow || isComboJustBroke){ // end of the list, time to go
+                int begin = isComboAtEndOfRow ? x-count : x-count;
+                int to = isComboAtEndOfRow ? x : begin + count - 1;
+                NSMutableArray *combo = [[NSMutableArray alloc]init];
+                for(int i=begin;i<=to;i++){
+                    [combo addObject:[NSNumber numberWithInt: i+y*6]];
                 }
-            }else{ // not equal
-                if(_count>=3){ // equal more than three, cash out
-                    NSMutableArray *combo = [[NSMutableArray alloc]init];
-                    for(int i=x-_count;i<=x-1;i++){
-                        [combo addObject:[NSValue valueWithCGPoint:CGPointMake(i, y)]];
-                    }
-                    [combos addObject:combo];
+                [self addUpCombos:combo withColorInt:intBoard[to][y]];
+                if(isComboAtEndOfRow){
+                    break;
+                }else{
+                    count = 1;
                 }
-                //reset
-                _count = 1;
-                previousType = orb.type;
+            }else if(intBoard[x][y] == previousType){ // equal, keep bet
+                count++;
+            }else{ // different, reset
+                count = 1;
+                previousType = intBoard[x][y];
             }
         }
     }
-    return combos;
 }
--(NSMutableArray *)calculateVerticalScore
+-(void)calculateVerticalScore
 {
-    // once per col
-    // todo remove hard code
-    NSMutableArray *combos = [[NSMutableArray alloc]init];
-    int count[6] = {1,1,1,1,1,1};
-    NSMutableArray *previousTypes = [[NSMutableArray alloc]init];
-    for (int y=0; y<[orbs count]; y++) {
-        NSMutableArray *row = [orbs objectAtIndex:y];
-        for (int x=0; x<[row count]; x++) {
-            PHOrb *orb = [row objectAtIndex:x];
-            if(y==0){
-                [previousTypes insertObject:orb.type atIndex:x];
-                continue;
-            }
-            if([orb.type isEqualToString: [previousTypes objectAtIndex:x]]){ // equal, keep bet
-                count[x]++;
-                if(y>=4 && count[x]>=3){ // end of the list, time to go
-                    NSMutableArray *combo = [[NSMutableArray alloc]init];
-                    for(int i=y-count[x];i<=y;i++){
-                        [combo addObject:[NSValue valueWithCGPoint:CGPointMake(x, i)]];
-                    }
-                    [combos addObject:combo];
+    int previousType,count;
+    for (int x=0; x<6; x++) {
+        count = 1;
+        previousType = intBoard[x][0];
+        for (int y=1; y<5; y++) {
+            bool isComboAtEndOfRow = intBoard[x][y] == previousType && y>=4 && count>=2;
+            bool isComboJustBroke = intBoard[x][y] != previousType && count>=3;
+            if(isComboAtEndOfRow || isComboJustBroke){ // end of the list, time to go
+                int begin = isComboAtEndOfRow ? y-count : y-count;
+                int to = isComboAtEndOfRow ? y : begin + count - 1;
+                NSMutableArray *combo = [[NSMutableArray alloc]init];
+                for(int i=begin;i<=to;i++){
+                    [combo addObject:[NSNumber numberWithInt: x+i*6]];
                 }
-            }else{ // not equal
-                if(count[x]>=3){ // equal more than three, cash out
-                    NSMutableArray *combo = [[NSMutableArray alloc]init];
-                    for(int i=y-count[x];i<=y-1;i++){
-                        [combo addObject:[NSValue valueWithCGPoint:CGPointMake(x, i)]];
-                    }
-                    [combos addObject:combo];
+                [self addUpCombos:combo withColorInt:intBoard[x][to]];
+                if(isComboAtEndOfRow){
+                    break;
+                }else{
+                    count = 1;
                 }
-                //reset
-                count[x] = 1;
-                [previousTypes replaceObjectAtIndex:x withObject: orb.type];
+            }else if(intBoard[x][y] == previousType){ // equal, keep bet
+                count++;
+            }else{ // different, reset
+                count = 1;
+                previousType = intBoard[x][y];
             }
         }
     }
-    return combos;
+}
+-(void)addUpCombos:(NSMutableArray*)combo withColorInt:(int)colorInt
+{
+    NSString *colorKey = [NSString stringWithFormat:@"%d", colorInt];
+    NSMutableArray *colorCombos = [combos objectForKey:colorKey];
+    if(!colorCombos){
+        colorCombos = [[NSMutableArray alloc]init];
+        [combos setObject:colorCombos forKey:colorKey];
+    }
+    BOOL repeated = NO;
+    for (int i=0; i<[colorCombos count]; i++) {
+        NSMutableArray *colorCombo = colorCombos[i];
+        NSMutableSet *intersection = [NSMutableSet setWithArray:colorCombo];
+        [intersection intersectSet:[NSSet setWithArray:combo]];
+        if([intersection count]>0){
+            NSMutableSet *intersection = [NSMutableSet setWithArray:colorCombo];
+            [intersection unionSet:[NSSet setWithArray:combo]];
+            colorCombos[i] = [intersection allObjects];
+            repeated = YES;
+            break;
+        }
+    }
+    if(!repeated){
+        [colorCombos addObject:combo];
+    }
 }
 -(void)traverse:(void(^)(PHOrb*,int x,int y))handler
 {
@@ -161,19 +163,17 @@ const int kSelectedEditData = 1;
         }
     }
 }
-/*
--(int*)getIntBoard
+
+-(void)getIntBoard
 {
-    int intBoard[5][6];
-    for (int y=0; y<[orbs count]; y++) {
+    for (int y=0; y<5; y++) {
         NSMutableArray *row = [orbs objectAtIndex:y];
-        for (int x=0; x<[row count]; x++) {
+        for (int x=0; x<6; x++) {
             PHOrb *orb = [row objectAtIndex:x];
-            intBoard[y][x] = [orb getTypeAsInt];
+            intBoard[x][y] = [orb getTypeAsInt];
         }
     }
-    return intBoard;
-}*/
+}
 -(void)swapOrb1:(PHOrb*)orb1 andOrb2:(PHOrb*)orb2
 {
     CGPoint p1 = orb1.position;
