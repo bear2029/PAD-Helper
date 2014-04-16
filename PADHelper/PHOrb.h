@@ -14,7 +14,8 @@ typedef enum orbTypeIds {
     orbTypeBlue = 2,
     orbTypePink = 3,
     orbTypeYellow = 4,
-    orbTypePurple = 5
+    orbTypePurple = 5,
+    orbTypeEmpty = -1
 } OrbTypeIds;
 
 @interface PHOrb : SKSpriteNode
@@ -26,5 +27,6 @@ typedef enum orbTypeIds {
 -(void)setOrbColor:(NSString *)color;
 -(BOOL)isSameType:(PHOrb*)orb;
 -(int)getTypeAsInt;
++(NSString*)colorStringFromInt:(int)colorInt;
 
 @end
