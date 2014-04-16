@@ -16,6 +16,12 @@
     self = [super init];
     return self;
 }
+-(id)initWithOrbColor:(NSString *)color
+{
+    self = [super init];
+    [self setOrbColor:color];
+    return self;
+}
 -(void)setOrbColor:(NSString *)color
 {
     self.type = color;
@@ -23,7 +29,7 @@
 }
 -(BOOL)isSameType:(PHOrb*)orb
 {
-    return orb.type = self.type;
+    return [orb.type isEqualToString: self.type];
 }
 -(int)getTypeAsInt
 {

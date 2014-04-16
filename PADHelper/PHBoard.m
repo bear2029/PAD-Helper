@@ -14,14 +14,12 @@ const int kSelectedEditData = 1;
     NSMutableArray *orbs;
     NSMutableArray *colors;
     NSMutableArray *previousColors;
-    NSMutableDictionary *combos;
     int intBoard[6][5];
 }
 
 -(id)init{
     colors = [[NSMutableArray alloc]init];
     orbs = [[NSMutableArray alloc]init];
-    self.score = [[NSMutableDictionary alloc]init];
     return self;
 }
 -(void)addOrb:(PHOrb *)orb OnBoardAt:(int)x andY:(int)y
@@ -33,7 +31,6 @@ const int kSelectedEditData = 1;
 }
 -(PHOrb*)getOrbAtX:(int)x andY:(int)y
 {
-    NSLog(@"get orb at pos");
     if([orbs count]>y && [[orbs objectAtIndex:y]count]>x){
         return [[orbs objectAtIndex:y]objectAtIndex:x];
     }
@@ -41,7 +38,6 @@ const int kSelectedEditData = 1;
 }
 -(CGPoint)getPositionOfOrb:(PHOrb*)_orb
 {
-    NSLog(@"get pos");
     for (int y=0; y<[orbs count]; y++) {
         NSMutableArray *row = [orbs objectAtIndex:y];
         for (int x=0; x<[row count]; x++) {
@@ -54,16 +50,34 @@ const int kSelectedEditData = 1;
 }
 -(void)snapShot
 {
-    NSLog(@"snap");
     previousColors = [colors copy];
 }
 -(void)calculateScore
 {
     [self getIntBoard];
-    combos = [[NSMutableDictionary alloc]init];
-    [self calculateHorizontalScore];
-    [self calculateVerticalScore];
-    NSLog(@"%@",combos);
+    self.combos = [[NSMutableDictionary alloc]init];
+    NSMutableArray *comboForAllLevels = [[NSMutableArray alloc]init];
+    do {
+        [self calculateHorizontalScore];
+        [self calculateVerticalScore];
+        [comboForAllLevels addObject:self.combos];
+        [self eliminateCombo];
+    } while (self.combos != NULL);
+    //} while (NO);
+}
+-(void)eliminateCombo
+{
+    NSMutableArray *flatCombos = [[NSMutableArray alloc]init];
+    
+    for (id key in self.combos) {
+        NSArray *colorCombos = [self.combos objectForKey:key];
+        for (NSArray *colorCombo in colorCombos) {
+            for (NSNumber *n in colorCombo) {
+                [flatCombos addObject:n];
+            }
+        }
+    }
+    NSLog(@"flat =========== > \n%@",flatCombos);
 }
 -(void)calculateHorizontalScore
 {
@@ -130,10 +144,10 @@ const int kSelectedEditData = 1;
 -(void)addUpCombos:(NSMutableArray*)combo withColorInt:(int)colorInt
 {
     NSString *colorKey = [NSString stringWithFormat:@"%d", colorInt];
-    NSMutableArray *colorCombos = [combos objectForKey:colorKey];
+    NSMutableArray *colorCombos = [self.combos objectForKey:colorKey];
     if(!colorCombos){
         colorCombos = [[NSMutableArray alloc]init];
-        [combos setObject:colorCombos forKey:colorKey];
+        [self.combos setObject:colorCombos forKey:colorKey];
     }
     BOOL repeated = NO;
     for (int i=0; i<[colorCombos count]; i++) {
@@ -154,7 +168,6 @@ const int kSelectedEditData = 1;
 }
 -(void)traverse:(void(^)(PHOrb*,int x,int y))handler
 {
-    NSLog(@"traverse");
     for (int y=0; y<[orbs count]; y++) {
         NSMutableArray *row = [orbs objectAtIndex:y];
         for (int x=0; x<[row count]; x++) {
@@ -163,7 +176,6 @@ const int kSelectedEditData = 1;
         }
     }
 }
-
 -(void)getIntBoard
 {
     for (int y=0; y<5; y++) {
@@ -194,8 +206,6 @@ const int kSelectedEditData = 1;
     CGPoint index2 = [self getPositionOfOrb:orb2];
     [[orbs objectAtIndex:index1.y]setObject:orb2 atIndex:index1.x];
     [[orbs objectAtIndex:index2.y]setObject:orb1 atIndex:index2.x];
-    NSLog(@"swap");
-    [self dump];
 }
 -(void)dump
 {
@@ -215,13 +225,11 @@ const int kSelectedEditData = 1;
 }
 -(void)undo
 {
-    NSLog(@"undo");
     colors = previousColors;
     [self setColor];
 }
 -(void)setColor
 {
-    NSLog(@"set color");
     [self snapShot];
     for (int y=0; y<[orbs count]; y++) {
         NSMutableArray *row = [orbs objectAtIndex:y];
@@ -231,12 +239,10 @@ const int kSelectedEditData = 1;
             [orb setOrbColor:colorName];
         }
     }
-    [self dump];
 }
 
 -(void)randomAssignColor
 {
-    NSLog(@"rand");
     NSArray *names = @[@"p",@"r",@"h",@"y",@"b",@"g"];
     for (int x=0; x<6; x++) {
         for (int y=0; y<5; y++) {

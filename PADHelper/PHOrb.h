@@ -22,6 +22,7 @@ typedef enum orbTypeIds {
 @property BOOL isMoving;
 @property NSString *type;
 
+-(id)initWithOrbColor: (NSString*)color;
 -(void)setOrbColor:(NSString *)color;
 -(BOOL)isSameType:(PHOrb*)orb;
 -(int)getTypeAsInt;

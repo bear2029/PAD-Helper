@@ -14,7 +14,7 @@ extern const int kSelectedEditData;
 
 @interface PHBoard : NSObject
 
-@property NSMutableDictionary *score;
+@property NSMutableDictionary *combos;
 
 -(void)calculateScore;
 -(void)addOrb:(PHOrb*)orb OnBoardAt:(int)x andY:(int)y;
@@ -22,5 +22,7 @@ extern const int kSelectedEditData;
 -(void)randomAssignColor;
 -(void)undo;
 -(void)swapOrb1:(PHOrb*)orb1 andOrb2:(PHOrb*)orb2;
+-(void)dump;
+
 
 @end
