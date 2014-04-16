@@ -1,75 +1,61 @@
 //
-//  PHBoard.m
+//  PHCalculator.m
 //  PADHelper
 //
-//  Created by BIINGYANN HSIUNG on 4/10/14.
+//  Created by BIINGYANN HSIUNG on 4/16/14.
 //  Copyright (c) 2014 BIINGYANN HSIUNG. All rights reserved.
 //
 
-#import "PHBoard.h"
+#import "PHCalculator.h"
 
-const int kSelectedEditData = 1;
-
-@implementation PHBoard{
-    NSMutableArray *orbs;
-    NSMutableArray *colors;
-    NSMutableArray *previousColors;
+@implementation PHCalculator
+{
     int intBoard[6][5];
 }
-
--(id)init{
-    colors = [[NSMutableArray alloc]init];
-    orbs = [[NSMutableArray alloc]init];
-    return self;
-}
--(void)addOrb:(PHOrb *)orb OnBoardAt:(int)x andY:(int)y
+-(void)setIntBoardFromOrbs:(NSMutableArray *)orbs
 {
-    if([orbs count]<=y){
-        [orbs insertObject:[[NSMutableArray alloc]init] atIndex:y];
-    }
-    [[orbs objectAtIndex:y]insertObject:orb atIndex:x];
-}
--(PHOrb*)getOrbAtX:(int)x andY:(int)y
-{
-    if([orbs count]>y && [[orbs objectAtIndex:y]count]>x){
-        return [[orbs objectAtIndex:y]objectAtIndex:x];
-    }
-    return nil;
-}
--(CGPoint)getPositionOfOrb:(PHOrb*)_orb
-{
-    for (int y=0; y<[orbs count]; y++) {
+    for (int y=0; y<5; y++) {
         NSMutableArray *row = [orbs objectAtIndex:y];
-        for (int x=0; x<[row count]; x++) {
-            if([row objectAtIndex:x] == _orb){
-                return CGPointMake(x,y);
-            }
-      }
+        for (int x=0; x<6; x++) {
+            PHOrb *orb = [row objectAtIndex:x];
+            intBoard[x][y] = [orb getTypeAsInt];
+        }
     }
-    return CGPointMake(-1, -1);
 }
--(void)snapShot
+-(NSMutableArray*)calculateScore
 {
-    previousColors = [colors copy];
-}
--(void)calculateScore
-{
-    [self getIntBoard];
-    self.combos = [[NSMutableDictionary alloc]init];
     NSMutableArray *comboForAllLevels = [[NSMutableArray alloc]init];
+    int count = 0,limit = 20;
     do {
+        count++;
+        self.combos = [[NSMutableDictionary alloc]init];
         [self calculateHorizontalScore];
         [self calculateVerticalScore];
-        [comboForAllLevels addObject:self.combos];
-        [self eliminateCombo];
-    } while (self.combos != NULL);
-    //} while (NO);
+        if([self.combos count]){
+            [comboForAllLevels addObject:self.combos];
+            [self eliminateCombo];
+        }else{
+            break;
+        }
+        if(count>limit){
+            NSLog(@"something wrong, can't be doing so many times");
+            break;
+        }
+    } while ([self.combos count]);
+    return comboForAllLevels;
 }
 -(void)eliminateCombo
 {
     NSMutableArray *flatCombos = [[NSMutableArray alloc]init];
-    
-    for (id key in self.combos) {
+    // init new board
+    int newIntBoard[6][5];
+    for (int x=0; x<6; x++) {
+        for(int y=4; y>=0; y--){
+            newIntBoard[x][y] = orbTypeEmpty;
+        }
+    }
+    // create flat array of position of the combo, to check which one to eliminate
+    for(id key in self.combos) {
         NSArray *colorCombos = [self.combos objectForKey:key];
         for (NSArray *colorCombo in colorCombos) {
             for (NSNumber *n in colorCombo) {
@@ -77,7 +63,28 @@ const int kSelectedEditData = 1;
             }
         }
     }
-    NSLog(@"flat =========== > \n%@",flatCombos);
+    // create the new board after combo elimination
+    for (int x=0; x<6; x++) {
+        for(int y=4; y>=0; y--){
+            BOOL isPartOfCombo = NO;
+            for (NSNumber *n in flatCombos) {
+                if([n intValue] == x+6*y){
+                    isPartOfCombo = YES;
+                    break;
+                }
+            }
+            if(!isPartOfCombo){
+                // insert from the bottom
+                for (int _y=4; _y>=0; _y--) {
+                    if(newIntBoard[x][_y] == orbTypeEmpty){
+                        newIntBoard[x][_y] = intBoard[x][y];
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    memcpy(&intBoard, &newIntBoard, sizeof intBoard);
 }
 -(void)calculateHorizontalScore
 {
@@ -86,6 +93,9 @@ const int kSelectedEditData = 1;
         count = 1;
         previousType = intBoard[0][y];
         for (int x=1; x<6; x++) {
+            if(intBoard[x][y] == orbTypeEmpty){
+                continue;
+            }
             bool isComboAtEndOfRow = intBoard[x][y] == previousType && x>=5 && count>=2;
             bool isComboJustBroke = intBoard[x][y] != previousType && count>=3;
             if(isComboAtEndOfRow || isComboJustBroke){ // end of the list, time to go
@@ -117,6 +127,9 @@ const int kSelectedEditData = 1;
         count = 1;
         previousType = intBoard[x][0];
         for (int y=1; y<5; y++) {
+            if(intBoard[x][y] == orbTypeEmpty){
+                continue;
+            }
             bool isComboAtEndOfRow = intBoard[x][y] == previousType && y>=4 && count>=2;
             bool isComboJustBroke = intBoard[x][y] != previousType && count>=3;
             if(isComboAtEndOfRow || isComboJustBroke){ // end of the list, time to go
@@ -166,94 +179,19 @@ const int kSelectedEditData = 1;
         [colorCombos addObject:combo];
     }
 }
--(void)traverse:(void(^)(PHOrb*,int x,int y))handler
-{
-    for (int y=0; y<[orbs count]; y++) {
-        NSMutableArray *row = [orbs objectAtIndex:y];
-        for (int x=0; x<[row count]; x++) {
-            PHOrb *orb = [row objectAtIndex:x];
-            handler(orb,x,y);
-        }
-    }
-}
--(void)getIntBoard
-{
-    for (int y=0; y<5; y++) {
-        NSMutableArray *row = [orbs objectAtIndex:y];
-        for (int x=0; x<6; x++) {
-            PHOrb *orb = [row objectAtIndex:x];
-            intBoard[x][y] = [orb getTypeAsInt];
-        }
-    }
-}
--(void)swapOrb1:(PHOrb*)orb1 andOrb2:(PHOrb*)orb2
-{
-    CGPoint p1 = orb1.position;
-    CGPoint p2 = orb2.position;
-    orb1.isMoving = YES;
-    orb2.isMoving = YES;
-    [orb1 runAction:[SKAction sequence:@[
-                                         [SKAction moveTo:p2 duration:.1]
-                                         ]] completion:^(void){
-                                            orb1.isMoving = NO;
-    }];
-    [orb2 runAction:[SKAction sequence:@[
-                                         [SKAction moveTo:p1 duration:.1]
-                                         ]] completion:^(void){
-                                            orb2.isMoving = NO;
-    }];
-    CGPoint index1 = [self getPositionOfOrb:orb1];
-    CGPoint index2 = [self getPositionOfOrb:orb2];
-    [[orbs objectAtIndex:index1.y]setObject:orb2 atIndex:index1.x];
-    [[orbs objectAtIndex:index2.y]setObject:orb1 atIndex:index2.x];
-}
 -(void)dump
 {
-    NSLog(@"dump");
     NSString *str = @"\n";
-    for (int y=0; y<[orbs count]; y++) {
-        NSMutableArray *row = [orbs objectAtIndex:y];
-        for (int x=0; x<[row count]; x++) {
-            PHOrb *orb = [row objectAtIndex:x];
-            str = [NSString stringWithFormat:@"%@ %@",str,[orb.type substringToIndex:1]];
-            if(x>=[row count]-1){
+    for (int y=0; y<5; y++) {
+        for (int x=0; x<6; x++) {
+            str = [NSString stringWithFormat:@"%@ %d",str,intBoard[x][y]];
+            if(x>=5){
                 str = [NSString stringWithFormat:@"%@\n",str];
             }
         }
     }
     NSLog(@"%@",str);
 }
--(void)undo
-{
-    colors = previousColors;
-    [self setColor];
-}
--(void)setColor
-{
-    [self snapShot];
-    for (int y=0; y<[orbs count]; y++) {
-        NSMutableArray *row = [orbs objectAtIndex:y];
-        for (int x=0; x<[row count]; x++) {
-            NSString *colorName = [[colors objectAtIndex:x]objectAtIndex:y];
-            PHOrb *orb = [[orbs objectAtIndex:y]objectAtIndex:x];
-            [orb setOrbColor:colorName];
-        }
-    }
-}
 
--(void)randomAssignColor
-{
-    NSArray *names = @[@"p",@"r",@"h",@"y",@"b",@"g"];
-    for (int x=0; x<6; x++) {
-        for (int y=0; y<5; y++) {
-            if([colors count]<=x){
-                [colors insertObject:[[NSMutableArray alloc]init] atIndex:x];
-            }
-            NSString *randName = [names objectAtIndex:arc4random()%[names count]];
-            [[colors objectAtIndex:x]insertObject:randName atIndex:y];
-        }
-    }
-    [self setColor];
-}
 
 @end

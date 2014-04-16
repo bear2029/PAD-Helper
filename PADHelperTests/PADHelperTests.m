@@ -33,9 +33,9 @@
 -(PHBoard*)createBoard1
 {
     NSArray *testBoard = @[@[@"p",@"p",@"h",@"b",@"h",@"p"],
-                           @[@"h",@"y",@"y",@"y",@"h",@"y"],
+                           @[@"h",@"h",@"h",@"y",@"h",@"y"],
                            @[@"y",@"p",@"p",@"b",@"g",@"b"],
-                           @[@"r",@"y",@"p",@"b",@"g",@"r"],
+                           @[@"r",@"p",@"p",@"b",@"g",@"r"],
                            @[@"h",@"y",@"h",@"y",@"r",@"g"]];
     PHBoard *board = [[PHBoard alloc]init];
     for (int y=0; y<5; y++) {
@@ -64,13 +64,23 @@
     }
     return board;
 }
++(NSString*)toJsonString:(NSMutableArray*)arr
+{
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:arr
+                                                       options:0
+                                                         error:NULL];
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    return jsonString;
+}
 - (void)testCalculate
 {
+    //http://appleprogramming.com/blog/2013/12/26/xctest-assertions-documentation/
     PHBoard *board = [self createBoard1];
-    //[board dump];
-    [board calculateScore];
-    NSLog(@"%@",board.combos);
-    //XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+    NSMutableArray* combo = [board calculateScore];
+    NSString *comboString = [PADHelperTests toJsonString:combo];
+    NSString *expectedComboString = @"[{\"3\":[[6,7,8]]},{\"5\":[[7,13,19]]}]";
+    //XCTAssertTrue([comboString isEqualToString:expectedComboString], @"nono");
+    XCTAssertEqualObjects(comboString,expectedComboString,@"elimination combo fail");
 }
 
 

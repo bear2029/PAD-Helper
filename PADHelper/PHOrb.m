@@ -47,5 +47,11 @@
         return orbTypeGreen;
     }
 }
++(NSString*)colorStringFromInt:(int)colorInt
+{
+    NSArray *colorNames = @[@"Fire",@"Wood",@"Water",@"Heal",
+                            @"Light",@"Darkness"];
+    return [colorNames objectAtIndex:colorInt];
+}
 
 @end
