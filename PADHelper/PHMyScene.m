@@ -12,7 +12,7 @@
     PHOrb *currentOrb;
     float _x,_y,w,_w,h,_h;
     PHBoard *board;
-    SKLabelNode *timer,*scoreText;
+    SKLabelNode *timer;
     NSTimer *countDownTimer;
     float mseconds;
 }
@@ -45,11 +45,6 @@
     reset.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame)+80);
     [self addChild:reset];
     [self createTimer];
-    
-    scoreText = [[SKLabelNode alloc]init];
-    scoreText.fontSize = 13;
-    scoreText.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame)+110);
-    [self addChild:scoreText];
     
 }
 -(void)createTimer
@@ -148,6 +143,7 @@
             }
             [board swapOrb1:lastOrb andOrb2:orb];
             break;
+            
         }
         currentOrb.position = point;
     }
@@ -160,24 +156,15 @@
         currentOrb.linkedOrb.alpha = 1;
         [currentOrb removeFromParent];
         [countDownTimer invalidate];
-        NSMutableArray *combos = [board calculateScore];
-        [self displayScoreFromCombo:combos];
+        [board calculateScore];
     }
+
 }
--(void)displayScoreFromCombo:(NSMutableArray*)comboAll
+
+-(void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    NSString *text = @"";
-    for (NSDictionary *colorCombo in comboAll) {
-        for (NSString *color in colorCombo) {
-            NSArray *combos = [colorCombo objectForKey:color];
-            text = [NSString stringWithFormat:@"%@%@: %lu\n",
-                    text,
-                    [PHOrb colorStringFromInt: [color intValue]],
-                    (unsigned long)[combos count]];
-        }
-    }
-    scoreText.text = text;
 }
+
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
 }
