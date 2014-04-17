@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0B811C2A18FE6F3000F30334 /* PHCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B811C2918FE6F3000F30334 /* PHCalculator.m */; };
 		0B963B3418F6792C00897A97 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B963B3318F6792C00897A97 /* Foundation.framework */; };
 		0B963B3618F6792C00897A97 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B963B3518F6792C00897A97 /* CoreGraphics.framework */; };
 		0B963B3818F6792C00897A97 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B963B3718F6792C00897A97 /* UIKit.framework */; };
@@ -46,8 +45,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0B811C2818FE6F3000F30334 /* PHCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHCalculator.h; sourceTree = "<group>"; };
-		0B811C2918FE6F3000F30334 /* PHCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHCalculator.m; sourceTree = "<group>"; };
 		0B963B3018F6792C00897A97 /* PADHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PADHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B963B3318F6792C00897A97 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0B963B3518F6792C00897A97 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -158,8 +155,6 @@
 				0B963B4E18F6792C00897A97 /* PHMyScene.m */,
 				0B963B8218F6AACC00897A97 /* PHBoard.h */,
 				0B963B8318F6AACC00897A97 /* PHBoard.m */,
-				0B811C2818FE6F3000F30334 /* PHCalculator.h */,
-				0B811C2918FE6F3000F30334 /* PHCalculator.m */,
 				0B963B7F18F6970000897A97 /* PHOrb.h */,
 				0B963B8018F6970000897A97 /* PHOrb.m */,
 				0B963B5218F6792C00897A97 /* Images.xcassets */,
@@ -308,7 +303,6 @@
 				0B963B4618F6792C00897A97 /* PHAppDelegate.m in Sources */,
 				0B963B4C18F6792C00897A97 /* PHViewController.m in Sources */,
 				0B963B8118F6970000897A97 /* PHOrb.m in Sources */,
-				0B811C2A18FE6F3000F30334 /* PHCalculator.m in Sources */,
 				0B963B4F18F6792C00897A97 /* PHMyScene.m in Sources */,
 				0B963B8418F6AACC00897A97 /* PHBoard.m in Sources */,
 				0B963B4218F6792C00897A97 /* main.m in Sources */,
