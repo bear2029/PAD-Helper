@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B13910518FF8D3400C6A531 /* PHBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B13910418FF8D3400C6A531 /* PHBoard.m */; };
 		0B811C2A18FE6F3000F30334 /* PHCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B811C2918FE6F3000F30334 /* PHCalculator.m */; };
 		0B963B3418F6792C00897A97 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B963B3318F6792C00897A97 /* Foundation.framework */; };
 		0B963B3618F6792C00897A97 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B963B3518F6792C00897A97 /* CoreGraphics.framework */; };
@@ -32,7 +33,6 @@
 		0B963B7C18F6795C00897A97 /* g.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B963B7518F6795C00897A97 /* g.png */; };
 		0B963B7E18F67A0900897A97 /* pad-bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0B963B7D18F67A0900897A97 /* pad-bg.jpg */; };
 		0B963B8118F6970000897A97 /* PHOrb.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B963B8018F6970000897A97 /* PHOrb.m */; };
-		0B963B8418F6AACC00897A97 /* PHBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B963B8318F6AACC00897A97 /* PHBoard.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +46,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0B13910418FF8D3400C6A531 /* PHBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHBoard.m; sourceTree = "<group>"; };
 		0B811C2818FE6F3000F30334 /* PHCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHCalculator.h; sourceTree = "<group>"; };
 		0B811C2918FE6F3000F30334 /* PHCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHCalculator.m; sourceTree = "<group>"; };
 		0B963B3018F6792C00897A97 /* PADHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PADHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,7 +81,6 @@
 		0B963B7F18F6970000897A97 /* PHOrb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHOrb.h; sourceTree = "<group>"; };
 		0B963B8018F6970000897A97 /* PHOrb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHOrb.m; sourceTree = "<group>"; };
 		0B963B8218F6AACC00897A97 /* PHBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHBoard.h; sourceTree = "<group>"; };
-		0B963B8318F6AACC00897A97 /* PHBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHBoard.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,7 +157,7 @@
 				0B963B4D18F6792C00897A97 /* PHMyScene.h */,
 				0B963B4E18F6792C00897A97 /* PHMyScene.m */,
 				0B963B8218F6AACC00897A97 /* PHBoard.h */,
-				0B963B8318F6AACC00897A97 /* PHBoard.m */,
+				0B13910418FF8D3400C6A531 /* PHBoard.m */,
 				0B811C2818FE6F3000F30334 /* PHCalculator.h */,
 				0B811C2918FE6F3000F30334 /* PHCalculator.m */,
 				0B963B7F18F6970000897A97 /* PHOrb.h */,
@@ -309,8 +309,8 @@
 				0B963B4C18F6792C00897A97 /* PHViewController.m in Sources */,
 				0B963B8118F6970000897A97 /* PHOrb.m in Sources */,
 				0B811C2A18FE6F3000F30334 /* PHCalculator.m in Sources */,
+				0B13910518FF8D3400C6A531 /* PHBoard.m in Sources */,
 				0B963B4F18F6792C00897A97 /* PHMyScene.m in Sources */,
-				0B963B8418F6AACC00897A97 /* PHBoard.m in Sources */,
 				0B963B4218F6792C00897A97 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
