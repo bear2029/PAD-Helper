@@ -8,17 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import "PHOrb.h"
+#import "PHCalculator.h"
 
 extern const int kSelectedEditData;
 
 
 @interface PHBoard : NSObject
 
-@property NSMutableDictionary *combos;
-
--(void)calculateScore;
+-(NSMutableArray*)calculateScore;
 -(void)addOrb:(PHOrb*)orb OnBoardAt:(int)x andY:(int)y;
--(PHOrb*)getOrbAtX:(int)x andY:(int)y;
 -(void)randomAssignColor;
 -(void)undo;
 -(void)swapOrb1:(PHOrb*)orb1 andOrb2:(PHOrb*)orb2;
