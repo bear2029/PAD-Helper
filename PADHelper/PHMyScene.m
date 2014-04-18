@@ -30,6 +30,7 @@
         [self makeBackground];
         [self makeOrbs];
         [self makeUtilities];
+        NSLog(@"aaa");
     }
     return self;
 }
