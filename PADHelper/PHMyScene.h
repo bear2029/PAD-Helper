@@ -9,10 +9,9 @@
 #import <SpriteKit/SpriteKit.h>
 #import "PHOrb.h"
 #import "PHBoard.h"
-#import "PHScreenParser.h"
 #import "PHScorePanel.h"
 #import "PHMainButton.h"
 
-@interface PHMyScene : SKScene
+@interface PHMyScene : SKScene<DelegateToMainScene>
 
 @end

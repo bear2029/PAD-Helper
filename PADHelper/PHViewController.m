@@ -8,6 +8,7 @@
 
 #import "PHViewController.h"
 #import "PHMyScene.h"
+#import "PHScreenParser.h"
 
 @implementation PHViewController
 
@@ -19,8 +20,7 @@
     SKView * skView = (SKView *)self.view;
     skView.showsFPS = YES;
     skView.showsNodeCount = YES;
-    
-    
+        
     // Create and configure the scene.
     SKScene * scene = [PHMyScene sceneWithSize:skView.bounds.size];
     scene.scaleMode = SKSceneScaleModeAspectFill;

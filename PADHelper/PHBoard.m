@@ -45,7 +45,41 @@ const int kSelectedEditData = 1;
 -(NSMutableArray*)calculateScore
 {
     [calculator setIntBoardFromOrbs:orbs];
-    return [calculator calculateScore];
+    NSMutableArray *combos = [calculator calculateScore];
+    [self highLightWithCombos:combos];
+    return combos;
+}
+-(void)highLightWithCombos:(NSMutableArray *)comboAll
+{
+    for (NSDictionary *combosLevel in comboAll) { // combos in each level
+        for (NSString *color in combosLevel) {
+            NSMutableArray *combosPerColor = [combosLevel objectForKey:color];// combos list for each color
+            for (NSMutableArray *combos in combosPerColor) { // each combo for the color
+                for (NSNumber *n in combos) {
+                    int i = [n floatValue];
+                    int y = ceilf(i/6);
+                    int x = i%6;
+                    PHOrb *orb = [[orbs objectAtIndex:y]objectAtIndex:x];
+                    [orb runAction:[SKAction repeatActionForever:
+                                    [SKAction sequence:@[
+                                                         [SKAction fadeAlphaTo:.5 duration:1],
+                                                         [SKAction fadeAlphaTo:1 duration:.5]
+                                                         ]]]];
+                    orb.alpha = .8;
+                }
+            }
+        }
+        break;
+    }
+}
+-(void)stopHighLighting
+{
+    for (NSMutableArray *row in orbs) {
+        for (PHOrb *orb in row) {
+            orb.alpha = 1;
+            [orb removeAllActions];
+        }
+    }
 }
 -(void)swapOrb1:(PHOrb*)orb1 andOrb2:(PHOrb*)orb2
 {
