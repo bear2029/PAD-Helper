@@ -11,6 +11,7 @@
 @implementation PHCalculator
 {
     int intBoard[6][5];
+    int associate[30];
 }
 -(void)setIntBoardFromOrbs:(NSMutableArray *)orbs
 {
@@ -42,7 +43,15 @@
             break;
         }
     } while ([self.combos count]);
+    [self adjustComboPositionByAssiciationMap:comboForAllLevels];
     return comboForAllLevels;
+}
+// solve combo levels based on association record
+-(void)adjustComboPositionByAssiciationMap:(NSMutableArray *)comboForAllLevels
+{
+    [self dump];
+    
+    //todo, finish
 }
 -(void)eliminateCombo
 {
@@ -52,6 +61,7 @@
     for (int x=0; x<6; x++) {
         for(int y=4; y>=0; y--){
             newIntBoard[x][y] = orbTypeEmpty;
+            associate[x+y*6] = x+y*6;
         }
     }
     // create flat array of position of the combo, to check which one to eliminate
@@ -78,6 +88,13 @@
                 for (int _y=4; _y>=0; _y--) {
                     if(newIntBoard[x][_y] == orbTypeEmpty){
                         newIntBoard[x][_y] = intBoard[x][y];
+                        int origPos = x+y*6;
+                        int afterPos = x+_y*6;
+                        for (int i=0; i<30; i++) {
+                            if(associate[i] == origPos){
+                                associate[i] = afterPos;
+                            }
+                        }
                         break;
                     }
                 }
