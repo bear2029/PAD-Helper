@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0B13910518FF8D3400C6A531 /* PHBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B13910418FF8D3400C6A531 /* PHBoard.m */; };
+		0B2990F319011C0B00587615 /* PHMainButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B2990F019011C0B00587615 /* PHMainButton.m */; };
+		0B2990F419011C0B00587615 /* PHScorePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B2990F219011C0B00587615 /* PHScorePanel.m */; };
 		0B811C2A18FE6F3000F30334 /* PHCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B811C2918FE6F3000F30334 /* PHCalculator.m */; };
 		0B963B3418F6792C00897A97 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B963B3318F6792C00897A97 /* Foundation.framework */; };
 		0B963B3618F6792C00897A97 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B963B3518F6792C00897A97 /* CoreGraphics.framework */; };
@@ -50,6 +52,10 @@
 
 /* Begin PBXFileReference section */
 		0B13910418FF8D3400C6A531 /* PHBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHBoard.m; sourceTree = "<group>"; };
+		0B2990EF19011C0B00587615 /* PHMainButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHMainButton.h; sourceTree = "<group>"; };
+		0B2990F019011C0B00587615 /* PHMainButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHMainButton.m; sourceTree = "<group>"; };
+		0B2990F119011C0B00587615 /* PHScorePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHScorePanel.h; sourceTree = "<group>"; };
+		0B2990F219011C0B00587615 /* PHScorePanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHScorePanel.m; sourceTree = "<group>"; };
 		0B811C2818FE6F3000F30334 /* PHCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHCalculator.h; sourceTree = "<group>"; };
 		0B811C2918FE6F3000F30334 /* PHCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHCalculator.m; sourceTree = "<group>"; };
 		0B963B3018F6792C00897A97 /* PADHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PADHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -172,6 +178,10 @@
 				78DF13811900E90100050D03 /* PHScreenParser.h */,
 				78DF13821900E90100050D03 /* PHScreenParser.m */,
 				78DF13831900E90100050D03 /* UIColorProcess.h */,
+				0B2990EF19011C0B00587615 /* PHMainButton.h */,
+				0B2990F019011C0B00587615 /* PHMainButton.m */,
+				0B2990F119011C0B00587615 /* PHScorePanel.h */,
+				0B2990F219011C0B00587615 /* PHScorePanel.m */,
 				78DF13841900E90100050D03 /* UIColorProcess.m */,
 				0B963B7F18F6970000897A97 /* PHOrb.h */,
 				0B963B8018F6970000897A97 /* PHOrb.m */,
@@ -321,11 +331,13 @@
 			files = (
 				78DF13851900E90100050D03 /* PHScreenParser.m in Sources */,
 				78DF13861900E90100050D03 /* UIColorProcess.m in Sources */,
+				0B2990F319011C0B00587615 /* PHMainButton.m in Sources */,
 				0B963B4618F6792C00897A97 /* PHAppDelegate.m in Sources */,
 				0B963B4C18F6792C00897A97 /* PHViewController.m in Sources */,
 				0B963B8118F6970000897A97 /* PHOrb.m in Sources */,
 				0B811C2A18FE6F3000F30334 /* PHCalculator.m in Sources */,
 				0B13910518FF8D3400C6A531 /* PHBoard.m in Sources */,
+				0B2990F419011C0B00587615 /* PHScorePanel.m in Sources */,
 				0B963B4F18F6792C00897A97 /* PHMyScene.m in Sources */,
 				0B963B4218F6792C00897A97 /* main.m in Sources */,
 			);
