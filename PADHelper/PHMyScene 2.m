@@ -13,7 +13,7 @@
     float _x,_y,w,_w,h,_h;
     PHBoard *board;
     SKLabelNode *timer;
-	PHScorePanel *scorePanel;
+    PHScorePanel *scorePanel;
     NSTimer *countDownTimer;
     float mseconds;
 }
@@ -27,11 +27,9 @@
         h = 53;
         _h = 50;
         board = [[PHBoard alloc]init];
-        /* Setup your scene here */
         [self makeBackground];
-        [self makeOrbs];
         [self makeUtilities];
-        NSLog(@"aaa");
+        [self makeOrbs];
     }
     return self;
 }
@@ -107,6 +105,8 @@
 {
     CGPoint point = [[touches anyObject]locationInNode:self];
     NSArray *nodes = [self nodesAtPoint:point];
+    [scorePanel reset];
+    [board stopHighLighting];
     for (SKNode *node in nodes) {
         if([node isKindOfClass:[PHOrb class]]){
             PHOrb *orb = (PHOrb*)node;
@@ -129,25 +129,6 @@
             break;
         }
     }
-}
--(void)buttonClicked:(NSString *)text
-{
-    [scorePanel reset];
-    [board stopHighLighting];
-    if([text isEqualToString:@"random"]){
-        [board randomAssignColor];
-    }else if([text isEqualToString:@"reset"]){
-        [board undo];
-    }else if([label.text isEqualToString:@"load"]){
-        [self loadSnapshot];
-    }
-}
--(void)loadSnapshot
-{
-    //test code for screenshot parsing
-    UIImage* ss = [UIImage imageNamed:@"test1.png"];
-    PHScreenParser *screenParser = [[PHScreenParser alloc] initWithImage:ss];
-    [screenParser parseScreenShot];
 }
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
@@ -175,31 +156,13 @@
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    //CGPoint point = [[touches anyObject]locationInNode:self];
     if(currentOrb){
         currentOrb.linkedOrb.alpha = 1;
         [currentOrb removeFromParent];
         [countDownTimer invalidate];
         NSMutableArray *combos = [board calculateScore];
-        [self displayScoreFromCombo:combos];
+        [scorePanel displayScoreFromCombo:combos];
     }
-}
--(void)displayScoreFromCombo:(NSMutableArray*)comboAll
-{
-    NSString *text = @"";
-    for (NSDictionary *colorCombo in comboAll) {
-        for (NSString *color in colorCombo) {
-            NSArray *combos = [colorCombo objectForKey:color];
-            text = [NSString stringWithFormat:@"%@%@: %lu\n",
-                    text,
-                    [PHOrb colorStringFromInt: [color intValue]],
-                    (unsigned long)[combos count]];
-        }
-    }
-    scoreText.text = text;
-}
--(void)update:(CFTimeInterval)currentTime {
-    /* Called before each frame is rendered */
 }
 
 @end

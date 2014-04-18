@@ -10,6 +10,8 @@
 #import "PHOrb.h"
 #import "PHBoard.h"
 #import "PHScreenParser.h"
+#import "PHScorePanel.h"
+#import "PHMainButton.h"
 
 @interface PHMyScene : SKScene
 
