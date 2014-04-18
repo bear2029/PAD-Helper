@@ -33,6 +33,9 @@
 		0B963B7C18F6795C00897A97 /* g.png in Resources */ = {isa = PBXBuildFile; fileRef = 0B963B7518F6795C00897A97 /* g.png */; };
 		0B963B7E18F67A0900897A97 /* pad-bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0B963B7D18F67A0900897A97 /* pad-bg.jpg */; };
 		0B963B8118F6970000897A97 /* PHOrb.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B963B8018F6970000897A97 /* PHOrb.m */; };
+		78DF13801900E8EC00050D03 /* test1.png in Resources */ = {isa = PBXBuildFile; fileRef = 78DF137F1900E8EC00050D03 /* test1.png */; };
+		78DF13851900E90100050D03 /* PHScreenParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DF13821900E90100050D03 /* PHScreenParser.m */; };
+		78DF13861900E90100050D03 /* UIColorProcess.m in Sources */ = {isa = PBXBuildFile; fileRef = 78DF13841900E90100050D03 /* UIColorProcess.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +84,11 @@
 		0B963B7F18F6970000897A97 /* PHOrb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHOrb.h; sourceTree = "<group>"; };
 		0B963B8018F6970000897A97 /* PHOrb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHOrb.m; sourceTree = "<group>"; };
 		0B963B8218F6AACC00897A97 /* PHBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHBoard.h; sourceTree = "<group>"; };
+		78DF137F1900E8EC00050D03 /* test1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test1.png; sourceTree = "<group>"; };
+		78DF13811900E90100050D03 /* PHScreenParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHScreenParser.h; sourceTree = "<group>"; };
+		78DF13821900E90100050D03 /* PHScreenParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHScreenParser.m; sourceTree = "<group>"; };
+		78DF13831900E90100050D03 /* UIColorProcess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIColorProcess.h; sourceTree = "<group>"; };
+		78DF13841900E90100050D03 /* UIColorProcess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIColorProcess.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +130,7 @@
 				0B963B7418F6795C00897A97 /* b.png */,
 				0B963B7518F6795C00897A97 /* g.png */,
 				0B963B7D18F67A0900897A97 /* pad-bg.jpg */,
+				78DF137F1900E8EC00050D03 /* test1.png */,
 			);
 			sourceTree = "<group>";
 		};
@@ -160,6 +169,10 @@
 				0B13910418FF8D3400C6A531 /* PHBoard.m */,
 				0B811C2818FE6F3000F30334 /* PHCalculator.h */,
 				0B811C2918FE6F3000F30334 /* PHCalculator.m */,
+				78DF13811900E90100050D03 /* PHScreenParser.h */,
+				78DF13821900E90100050D03 /* PHScreenParser.m */,
+				78DF13831900E90100050D03 /* UIColorProcess.h */,
+				78DF13841900E90100050D03 /* UIColorProcess.m */,
 				0B963B7F18F6970000897A97 /* PHOrb.h */,
 				0B963B8018F6970000897A97 /* PHOrb.m */,
 				0B963B5218F6792C00897A97 /* Images.xcassets */,
@@ -281,6 +294,7 @@
 				0B963B4018F6792C00897A97 /* InfoPlist.strings in Resources */,
 				0B963B7818F6795C00897A97 /* h.png in Resources */,
 				0B963B5318F6792C00897A97 /* Images.xcassets in Resources */,
+				78DF13801900E8EC00050D03 /* test1.png in Resources */,
 				0B963B7918F6795C00897A97 /* y.png in Resources */,
 				0B963B7C18F6795C00897A97 /* g.png in Resources */,
 				0B963B4918F6792C00897A97 /* Main.storyboard in Resources */,
@@ -305,6 +319,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78DF13851900E90100050D03 /* PHScreenParser.m in Sources */,
+				78DF13861900E90100050D03 /* UIColorProcess.m in Sources */,
 				0B963B4618F6792C00897A97 /* PHAppDelegate.m in Sources */,
 				0B963B4C18F6792C00897A97 /* PHViewController.m in Sources */,
 				0B963B8118F6970000897A97 /* PHOrb.m in Sources */,
