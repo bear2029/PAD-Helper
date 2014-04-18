@@ -9,6 +9,7 @@
 #import <SpriteKit/SpriteKit.h>
 #import "PHOrb.h"
 #import "PHBoard.h"
+#import "PHScreenParser.h"
 
 @interface PHMyScene : SKScene
 

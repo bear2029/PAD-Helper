@@ -8,7 +8,6 @@
 
 #import "PHViewController.h"
 #import "PHMyScene.h"
-#import "PHScreenParser.h"
 
 @implementation PHViewController
 
@@ -21,10 +20,6 @@
     skView.showsFPS = YES;
     skView.showsNodeCount = YES;
     
-    //test code for screenshot parsing
-    UIImage* ss = [UIImage imageNamed:@"test1.png"];
-    PHScreenParser *screenParser = [[PHScreenParser alloc] initWithImage:ss];
-    [screenParser parseScreenShot];
     
     // Create and configure the scene.
     SKScene * scene = [PHMyScene sceneWithSize:skView.bounds.size];

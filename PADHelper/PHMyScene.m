@@ -38,14 +38,22 @@
 {
     SKLabelNode *rand = [[SKLabelNode alloc]init];
     rand.text = @"rand";
-    rand.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame)+50);
+    rand.fontSize = 15;
+    rand.position = CGPointMake(30, CGRectGetMidY(self.frame)+80);
     [self addChild:rand];
     
     SKLabelNode *reset = [[SKLabelNode alloc]init];
     reset.text = @"reset";
-    reset.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame)+80);
+    reset.fontSize = 15;
+    reset.position = CGPointMake(70, CGRectGetMidY(self.frame)+80);
     [self addChild:reset];
     [self createTimer];
+    
+    SKLabelNode *load = [[SKLabelNode alloc]init];
+    load.fontSize = 15;
+    load.text = @"load";
+    load.position = CGPointMake(110, CGRectGetMidY(self.frame)+80);
+    [self addChild:load];
     
     scoreText = [[SKLabelNode alloc]init];
     scoreText.fontSize = 13;
@@ -126,9 +134,19 @@
                 [board randomAssignColor];
             }else if([label.text isEqualToString:@"reset"]){
                 [board undo];
+            }else if([label.text isEqualToString:@"load"]){
+                [self loadSnapshot];
             }
+
         }
     }
+}
+-(void)loadSnapshot
+{
+    //test code for screenshot parsing
+    UIImage* ss = [UIImage imageNamed:@"test1.png"];
+    PHScreenParser *screenParser = [[PHScreenParser alloc] initWithImage:ss];
+    [screenParser parseScreenShot];
 }
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
