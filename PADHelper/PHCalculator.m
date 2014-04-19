@@ -12,6 +12,7 @@
 {
     int intBoard[6][5];
     int associate[30];
+    NSMutableDictionary *globalCombos;
 }
 -(void)setIntBoardFromOrbs:(NSMutableArray *)orbs
 {
@@ -23,35 +24,66 @@
         }
     }
 }
--(NSMutableArray*)calculateScore
+-(NSMutableDictionary*)calculateScore
 {
-    NSMutableArray *comboForAllLevels = [[NSMutableArray alloc]init];
+    [self dump];
+    globalCombos = [NSMutableDictionary dictionary];
     int count = 0,limit = 20;
+    // init associate
+    for (int x=0; x<6; x++) {
+        for(int y=0; y<5; y++){
+            associate[x+y*6] = x+y*6;
+        }
+    }
     do {
-        count++;
         self.combos = [[NSMutableDictionary alloc]init];
         [self calculateHorizontalScore];
         [self calculateVerticalScore];
         if([self.combos count]){
-            [comboForAllLevels addObject:self.combos];
+            //[comboForAllLevels addObject:self.combos];
+            [self mergeToGlobalCombos:self.combos];
             [self eliminateCombo];
+            //[self dumpAssociate];
         }else{
             break;
         }
-        if(count>limit){
+        if(count>limit){ // add this to prevent infinate loop
             NSLog(@"something wrong, can't be doing so many times");
             break;
         }
+        //NSLog(@"==================================================\n\n");
     } while ([self.combos count]);
-    [self adjustComboPositionByAssiciationMap:comboForAllLevels];
-    return comboForAllLevels;
+    //NSLog(@"global %@",globalCombos);
+    return globalCombos;
 }
-// solve combo levels based on association record
--(void)adjustComboPositionByAssiciationMap:(NSMutableArray *)comboForAllLevels
+-(void)mergeToGlobalCombos:(NSMutableDictionary*)newCombo
 {
-    [self dump];
-    
-    //todo, finish
+    for (NSString *color in newCombo) {
+        NSMutableArray *globalCombosOfColor = [globalCombos objectForKey:color];
+        NSMutableArray *combosOfColor = [newCombo objectForKey:color];
+        if(!globalCombosOfColor){ // init for that color in global combos
+            globalCombosOfColor = [[NSMutableArray alloc]init];
+            [globalCombos setObject:globalCombosOfColor forKey:color];
+        }
+        for (NSMutableArray *combo in combosOfColor) {
+            NSMutableArray *adjustedCombo = [[NSMutableArray alloc]init];
+            for (NSNumber *n in combo) {
+                int i = [self findAssociationOrigin:[n intValue]];
+                //NSLog(@"convert %@ to %d based on %@ => %@",n,i,[PHCalculator intPosToString:i],[PHCalculator intPosToString:associate[[n intValue]]]);
+                [adjustedCombo addObject:[NSNumber numberWithInt:i]];
+            }
+            [globalCombosOfColor addObject:adjustedCombo];
+        }
+    }
+}
+-(int)findAssociationOrigin:(int)j
+{
+    for(int i=0; i<30; i++){
+        if(associate[i] == j){
+            return i;
+        }
+    }
+    return -1;
 }
 -(void)eliminateCombo
 {
@@ -59,9 +91,8 @@
     // init new board
     int newIntBoard[6][5];
     for (int x=0; x<6; x++) {
-        for(int y=4; y>=0; y--){
+        for(int y=0; y<5; y++){
             newIntBoard[x][y] = orbTypeEmpty;
-            associate[x+y*6] = x+y*6;
         }
     }
     // create flat array of position of the combo, to check which one to eliminate
@@ -86,7 +117,7 @@
             if(!isPartOfCombo){
                 // insert from the bottom
                 for (int _y=4; _y>=0; _y--) {
-                    if(newIntBoard[x][_y] == orbTypeEmpty){
+                    if(newIntBoard[x][_y] == orbTypeEmpty){//insert current to the bottom
                         newIntBoard[x][_y] = intBoard[x][y];
                         int origPos = x+y*6;
                         int afterPos = x+_y*6;
@@ -173,7 +204,7 @@
 }
 -(void)addUpCombos:(NSMutableArray*)combo withColorInt:(int)colorInt
 {
-    NSString *colorKey = [NSString stringWithFormat:@"%d", colorInt];
+    NSString *colorKey = [PHOrb colorStringFromInt:colorInt];
     NSMutableArray *colorCombos = [self.combos objectForKey:colorKey];
     if(!colorCombos){
         colorCombos = [[NSMutableArray alloc]init];
@@ -195,6 +226,27 @@
     if(!repeated){
         [colorCombos addObject:combo];
     }
+}
+-(void)dumpAssociate
+{
+    NSString *str = @"";
+    int count = 0;
+    for (int i=0; i<30; i++) {
+        if(i!=associate[i]){
+            str = [NSString stringWithFormat:@"%@\n%@ => %@",
+                   str,
+                   [PHCalculator intPosToString:i],
+                   [PHCalculator intPosToString:associate[i]]];
+            count++;
+        }
+    }
+    //NSLog(@"associate: %@\ncount: %d",str,count);
+}
++(NSString*)intPosToString:(int)pos
+{
+    int x = pos % 6;
+    int y = (pos-x)/6;
+    return [NSString stringWithFormat:@"(%d,%d)",x,y];
 }
 -(void)dump
 {

@@ -11,7 +11,8 @@
 
 @interface PHCalculator : NSObject
 @property NSMutableDictionary *combos;
--(NSMutableArray*)calculateScore;
+@property NSMutableDictionary *globalCombos;
+-(NSMutableDictionary*)calculateScore;
 -(void)setIntBoardFromOrbs:(NSMutableArray *)orbs;
 
 @end

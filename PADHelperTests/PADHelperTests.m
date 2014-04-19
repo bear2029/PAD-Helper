@@ -33,10 +33,10 @@
 -(PHBoard*)createBoard1
 {
     NSArray *testBoard = @[@[@"p",@"p",@"h",@"b",@"h",@"p"],
-                           @[@"h",@"h",@"h",@"y",@"h",@"y"],
-                           @[@"y",@"p",@"p",@"b",@"g",@"b"],
+                           @[@"y",@"r",@"h",@"y",@"h",@"y"],
+                           @[@"y",@"b",@"b",@"y",@"g",@"b"],
                            @[@"r",@"p",@"p",@"b",@"g",@"r"],
-                           @[@"h",@"y",@"h",@"y",@"r",@"g"]];
+                           @[@"p",@"y",@"y",@"y",@"r",@"g"]];
     PHBoard *board = [[PHBoard alloc]init];
     for (int y=0; y<5; y++) {
         for (int x=0; x<6; x++) {
@@ -76,9 +76,9 @@
 {
     //http://appleprogramming.com/blog/2013/12/26/xctest-assertions-documentation/
     PHBoard *board = [self createBoard1];
-    NSMutableArray* combo = [board calculateScore];
+    NSMutableDictionary* combo = [board calculateScore];
     NSString *comboString = [PADHelperTests toJsonString:combo];
-    NSString *expectedComboString = @"[{\"3\":[[6,7,8]]},{\"5\":[[7,13,19]]}]";
+    NSString *expectedComboString = @"{\"Light\":[[25,26,27]],\"Water\":[[13,14,21]],\"Darkness\":[[24,19,20]]}";
     //XCTAssertTrue([comboString isEqualToString:expectedComboString], @"nono");
     XCTAssertEqualObjects(comboString,expectedComboString,@"elimination combo fail");
 }

@@ -15,14 +15,14 @@ extern const int kSelectedEditData;
 
 @interface PHBoard : NSObject
 
--(NSMutableArray*)calculateScore;
+-(NSMutableDictionary*)calculateScore;
 -(void)addOrb:(PHOrb*)orb OnBoardAt:(int)x andY:(int)y;
 -(void)randomAssignColor;
 -(void)undo;
 -(void)swapOrb1:(PHOrb*)orb1 andOrb2:(PHOrb*)orb2;
 -(void)dump;
 -(void)stopHighLighting;
--(void)highLightWithCombos:(NSMutableArray *)comboAll;
+-(void)highLightWithCombos:(NSMutableDictionary *)comboAll;
 
 
 @end

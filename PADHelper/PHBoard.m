@@ -42,19 +42,18 @@ const int kSelectedEditData = 1;
     }
     return CGPointMake(-1, -1);
 }
--(NSMutableArray*)calculateScore
+-(NSMutableDictionary*)calculateScore
 {
     [calculator setIntBoardFromOrbs:orbs];
-    NSMutableArray *combos = [calculator calculateScore];
+    NSMutableDictionary *combos = [calculator calculateScore];
     [self highLightWithCombos:combos];
     return combos;
 }
--(void)highLightWithCombos:(NSMutableArray *)comboAll
+-(void)highLightWithCombos:(NSMutableDictionary *)allCombos
 {
-    for (NSDictionary *combosLevel in comboAll) { // combos in each level
-        for (NSString *color in combosLevel) {
-            NSMutableArray *combosPerColor = [combosLevel objectForKey:color];// combos list for each color
-            for (NSMutableArray *combos in combosPerColor) { // each combo for the color
+        for (NSString *color in allCombos) {
+            NSMutableArray *combosOfColor = [allCombos objectForKey:color];// combos list for each color
+            for (NSMutableArray *combos in combosOfColor) { // each combo for the color
                 for (NSNumber *n in combos) {
                     int i = [n floatValue];
                     int y = ceilf(i/6);
@@ -69,8 +68,6 @@ const int kSelectedEditData = 1;
                 }
             }
         }
-        break;
-    }
 }
 -(void)stopHighLighting
 {
