@@ -28,5 +28,6 @@ typedef enum orbTypeIds {
 -(BOOL)isSameType:(PHOrb*)orb;
 -(int)getTypeAsInt;
 +(NSString*)colorStringFromInt:(int)colorInt;
++(NSString*)getIconFileNameFromColorString:(NSString*)colorString;
 
 @end

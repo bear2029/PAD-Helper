@@ -47,6 +47,23 @@
         return orbTypeGreen;
     }
 }
++(NSString*)getIconFileNameFromColorString:(NSString*)colorString
+{
+    if([colorString isEqualToString:@"Fire"]){
+        return @"r";
+    }else if([colorString isEqualToString:@"Wood"]){
+        return @"g";
+    }else if([colorString isEqualToString:@"Water"]){
+        return @"b";
+    }else if([colorString isEqualToString:@"Light"]){
+        return @"y";
+    }else if([colorString isEqualToString:@"Darkness"]){
+        return @"p";
+    }else if([colorString isEqualToString:@"Heal"]){
+        return @"h";
+    }
+    return @"none";
+}
 +(NSString*)colorStringFromInt:(int)colorInt
 {
     NSArray *colorNames = @[@"Fire",@"Wood",@"Water",@"Heal",

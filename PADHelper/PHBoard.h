@@ -22,7 +22,6 @@ extern const int kSelectedEditData;
 -(void)swapOrb1:(PHOrb*)orb1 andOrb2:(PHOrb*)orb2;
 -(void)dump;
 -(void)stopHighLighting;
--(void)highLightWithCombos:(NSMutableDictionary *)comboAll;
 
 
 @end

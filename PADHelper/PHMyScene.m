@@ -45,7 +45,7 @@
     [self createTimer];
     
     scorePanel = [[PHScorePanel alloc]init];
-    scorePanel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame)+140);
+    scorePanel.position = CGPointMake(0, 350);
     [self addChild:scorePanel];
 }
 -(void)createTimer
@@ -161,8 +161,8 @@
         currentOrb.linkedOrb.alpha = 1;
         [currentOrb removeFromParent];
         [countDownTimer invalidate];
-        NSMutableArray *combos = [board calculateScore];
-        //[scorePanel displayScoreFromCombo:combos];
+        NSMutableDictionary *combos = [board calculateScore];
+        [scorePanel displayScoreFromCombo:combos];
     }
 }
 
