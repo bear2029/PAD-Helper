@@ -30,17 +30,31 @@ const int kSelectedEditData = 1;
     }
     [[orbs objectAtIndex:y]insertObject:orb atIndex:x];
 }
--(CGPoint)getPositionOfOrb:(PHOrb*)_orb
+-(PHOrb*)orbFromX:(int)x andY:(int)y
+{
+    if([orbs count]<=y){
+        return nil;
+    }
+    NSArray *row = [orbs objectAtIndex:y];
+    if([row count]<=x){
+        return nil;
+    }
+    return [row objectAtIndex:x];
+}
+-(NSDictionary*)positionOfOrb:(PHOrb*)_orb
 {
     for (int y=0; y<[orbs count]; y++) {
         NSMutableArray *row = [orbs objectAtIndex:y];
         for (int x=0; x<[row count]; x++) {
             if([row objectAtIndex:x] == _orb){
-                return CGPointMake(x,y);
+                NSDictionary *pos = [NSDictionary dictionaryWithObjectsAndKeys:
+                                     [NSNumber numberWithInt:x],@"x",
+                                     [NSNumber numberWithInt:y],@"y", nil];
+                return pos;
             }
       }
     }
-    return CGPointMake(-1, -1);
+    return nil;
 }
 -(NSMutableDictionary*)calculateScore
 {
@@ -59,11 +73,7 @@ const int kSelectedEditData = 1;
                     int y = ceilf(i/6);
                     int x = i%6;
                     PHOrb *orb = [[orbs objectAtIndex:y]objectAtIndex:x];
-                    [orb runAction:[SKAction repeatActionForever:
-                                    [SKAction sequence:@[
-                                                         [SKAction fadeAlphaTo:.5 duration:1],
-                                                         [SKAction fadeAlphaTo:1 duration:.5]
-                                                         ]]]];
+                    [orb glow];
                     orb.alpha = .8;
                 }
             }
@@ -74,7 +84,7 @@ const int kSelectedEditData = 1;
     for (NSMutableArray *row in orbs) {
         for (PHOrb *orb in row) {
             orb.alpha = 1;
-            [orb removeAllActions];
+            [orb stopGlow];
         }
     }
 }
@@ -94,10 +104,14 @@ const int kSelectedEditData = 1;
                                          ]] completion:^(void){
                                             orb2.isMoving = NO;
     }];
-    CGPoint index1 = [self getPositionOfOrb:orb1];
-    CGPoint index2 = [self getPositionOfOrb:orb2];
-    [[orbs objectAtIndex:index1.y]setObject:orb2 atIndex:index1.x];
-    [[orbs objectAtIndex:index2.y]setObject:orb1 atIndex:index2.x];
+    NSDictionary *index1 = [self positionOfOrb:orb1];
+    NSDictionary *index2 = [self positionOfOrb:orb2];
+    int x1 = [[index1 objectForKey:@"x"] intValue];
+    int y1 = [[index1 objectForKey:@"y"] intValue];
+    int x2 = [[index2 objectForKey:@"x"] intValue];
+    int y2 = [[index2 objectForKey:@"y"] intValue];
+    [[orbs objectAtIndex:y1] setObject:orb2 atIndex:x1];
+    [[orbs objectAtIndex:y2]setObject:orb1 atIndex:x2];
 }
 -(void)dump
 {

@@ -20,8 +20,16 @@
     return self;
 }
 
--(void)hide
+-(void)reset
 {
+    [title removeFromParent];
+    [shapeNode removeFromParent];
+    for (SKSpriteNode *icon in icons) {
+        [icon removeFromParent];
+    }
+    for (SKLabelNode *label in colorLabels) {
+        [label removeFromParent];
+    }
 }
 -(void)displayScoreFromCombo:(NSMutableDictionary*)combos
 {
@@ -47,7 +55,7 @@
         for (int i=0; i<[colorCombos count]; i++) {
             NSArray *combo = [colorCombos objectAtIndex:i];
             totalCount++;
-            int count = (unsigned long)[combo count];
+            int count = (int)[combo count];
             if(i!=0){
                 str = [NSString stringWithFormat:@"%@ + %d",str,count];
             }else{
@@ -71,7 +79,6 @@
 }
 -(void)createBg
 {
-    shapeNode = [[SKShapeNode alloc]init];
     CGRect box = CGRectMake(10, 0, 300.0, 180.0);
     shapeNode = [[SKShapeNode alloc] init];
     shapeNode.path = [UIBezierPath bezierPathWithRect:box].CGPath;

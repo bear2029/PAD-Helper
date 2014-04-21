@@ -8,6 +8,7 @@
 
 #import "PHOrb.h"
 
+
 @implementation PHOrb
 
 -(id)init
@@ -15,6 +16,28 @@
     self.isMoving = NO;
     self = [super init];
     return self;
+}
+-(void)glow
+{
+    [self stopGlow];
+    [self runAction:[SKAction repeatActionForever:
+                    [SKAction sequence:@[
+                                         [SKAction fadeAlphaTo:.5 duration:1],
+                                         [SKAction fadeAlphaTo:1 duration:.5]
+                                         ]]] withKey:@"glow"];
+}
+-(void)glowSpecial
+{
+    [self stopGlow];
+    [self runAction:[SKAction repeatActionForever:
+                     [SKAction sequence:@[
+                                          [SKAction fadeAlphaTo:.2 duration:.5],
+                                          [SKAction fadeAlphaTo:1 duration:.2]
+                                          ]]] withKey:@"glow"];
+}
+-(void)stopGlow
+{
+    [self removeActionForKey:@"glow"];
 }
 -(id)initWithOrbColor:(NSString *)color
 {

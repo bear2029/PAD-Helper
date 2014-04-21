@@ -29,5 +29,8 @@ typedef enum orbTypeIds {
 -(int)getTypeAsInt;
 +(NSString*)colorStringFromInt:(int)colorInt;
 +(NSString*)getIconFileNameFromColorString:(NSString*)colorString;
+-(void)glow;
+-(void)glowSpecial;
+-(void)stopGlow;
 
 @end

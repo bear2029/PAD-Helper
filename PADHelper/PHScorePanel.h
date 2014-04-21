@@ -12,6 +12,6 @@
 @interface PHScorePanel : SKNode
 
 -(void)displayScoreFromCombo:(NSMutableDictionary*)combos;
--(void)hide;
+-(void)reset;
 
 @end

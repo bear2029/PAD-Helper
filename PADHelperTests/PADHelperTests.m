@@ -30,41 +30,50 @@
     [super tearDown];
 }
 
--(PHBoard*)createBoard1
+-(void)testBoard1
 {
-    NSArray *testBoard = @[@[@"p",@"p",@"h",@"b",@"h",@"p"],
+    PHBoard *board = [self createBoard:@[@[@"p",@"p",@"h",@"b",@"h",@"p"],
                            @[@"y",@"r",@"h",@"y",@"h",@"y"],
                            @[@"y",@"b",@"b",@"y",@"g",@"b"],
                            @[@"r",@"p",@"p",@"b",@"g",@"r"],
-                           @[@"p",@"y",@"y",@"y",@"r",@"g"]];
-    PHBoard *board = [[PHBoard alloc]init];
-    for (int y=0; y<5; y++) {
-        for (int x=0; x<6; x++) {
-            NSString *orbColorName = [[testBoard objectAtIndex:y]objectAtIndex:x];
-            PHOrb *orb = [[PHOrb alloc]initWithOrbColor:orbColorName];
-            [board addOrb:orb OnBoardAt:x andY:y];
-        }
-    }
-    return board;
+                           @[@"p",@"y",@"y",@"y",@"r",@"g"]]];
+    NSString *expectedComboString = @"{\"Light\":[[25,26,27]],\"Water\":[[13,14,21]],\"Darkness\":[[24,19,20]]}";
+    [self calculateBoard:board andExcpectJson:expectedComboString];
 }
--(PHBoard*)createBoard2
+-(void)testBoard2
 {
-    NSArray *testBoard = @[@[@"p",@"p",@"p",@"b",@"h",@"p"],
-                           @[@"h",@"y",@"p",@"b",@"h",@"y"],
-                           @[@"y",@"p",@"p",@"b",@"h",@"b"],
-                           @[@"r",@"y",@"y",@"b",@"g",@"r"],
-                           @[@"h",@"y",@"p",@"y",@"r",@"g"]];
+    PHBoard *board = [self createBoard:@[@[@"p",@"p",@"p",@"b",@"h",@"p"],
+                                         @[@"h",@"y",@"p",@"b",@"h",@"y"],
+                                         @[@"y",@"p",@"p",@"b",@"h",@"b"],
+                                         @[@"r",@"y",@"y",@"b",@"g",@"r"],
+                                         @[@"h",@"y",@"p",@"y",@"r",@"g"]]];
+    NSString *expectedComboString = @"{\"Water\":[[3,9,15,21]],\"Darkness\":[[0,14,2,1,8]],\"Heal\":[[4,10,16]]}";
+    [self calculateBoard:board andExcpectJson:expectedComboString];
+}
+-(void)testBoard3
+{
+    PHBoard *board = [self createBoard:@[@[@"p",@"p",@"p",@"g",@"g",@"g"],
+                                         @[@"h",@"y",@"y",@"g",@"h",@"y"],
+                                         @[@"p",@"r",@"p",@"r",@"b",@"b"],
+                                         @[@"y",@"r",@"y",@"p",@"r",@"p"],
+                                         @[@"h",@"y",@"p",@"y",@"r",@"g"]]];
+    NSString *expectedComboString = @"{\"Wood\":[[3,4,5]],\"Darkness\":[[0,1,2]]}";
+    [self calculateBoard:board andExcpectJson:expectedComboString];
+}
+
+-(PHBoard *)createBoard:(NSArray*)arr
+{
     PHBoard *board = [[PHBoard alloc]init];
     for (int y=0; y<5; y++) {
         for (int x=0; x<6; x++) {
-            NSString *orbColorName = [[testBoard objectAtIndex:y]objectAtIndex:x];
+            NSString *orbColorName = [[arr objectAtIndex:y]objectAtIndex:x];
             PHOrb *orb = [[PHOrb alloc]initWithOrbColor:orbColorName];
             [board addOrb:orb OnBoardAt:x andY:y];
         }
     }
     return board;
 }
-+(NSString*)toJsonString:(NSMutableArray*)arr
++(NSString*)toJsonString:(NSMutableDictionary*)arr
 {
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:arr
                                                        options:0
@@ -72,15 +81,12 @@
     NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     return jsonString;
 }
-- (void)testCalculate
+- (void)calculateBoard:(PHBoard*)board andExcpectJson:(NSString*)jsonString
 {
     //http://appleprogramming.com/blog/2013/12/26/xctest-assertions-documentation/
-    PHBoard *board = [self createBoard1];
     NSMutableDictionary* combo = [board calculateScore];
     NSString *comboString = [PADHelperTests toJsonString:combo];
-    NSString *expectedComboString = @"{\"Light\":[[25,26,27]],\"Water\":[[13,14,21]],\"Darkness\":[[24,19,20]]}";
-    //XCTAssertTrue([comboString isEqualToString:expectedComboString], @"nono");
-    XCTAssertEqualObjects(comboString,expectedComboString,@"elimination combo fail");
+    XCTAssertEqualObjects(comboString,jsonString,@"elimination combo fail");
 }
 
 

@@ -12,7 +12,6 @@
 
 extern const int kSelectedEditData;
 
-
 @interface PHBoard : NSObject
 
 -(NSMutableDictionary*)calculateScore;
@@ -21,7 +20,9 @@ extern const int kSelectedEditData;
 -(void)undo;
 -(void)swapOrb1:(PHOrb*)orb1 andOrb2:(PHOrb*)orb2;
 -(void)dump;
+-(PHOrb*)orbFromX:(int)x andY:(int)y;
 -(void)stopHighLighting;
+-(NSDictionary*)positionOfOrb:(PHOrb*)_orb;
 
 
 @end

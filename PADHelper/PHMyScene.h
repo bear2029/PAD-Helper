@@ -11,6 +11,12 @@
 #import "PHBoard.h"
 #import "PHScorePanel.h"
 #import "PHMainButton.h"
+#import "PHPathTracker.h"
+
+typedef enum sceneModes {
+    sceneEditable = 1,
+    sceneIndication = 2
+} SceneModes;
 
 @interface PHMyScene : SKScene<DelegateToMainScene>
 
