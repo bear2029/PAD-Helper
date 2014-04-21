@@ -26,7 +26,7 @@
 }
 -(NSMutableDictionary*)calculateScore
 {
-    [self dump];
+    //[self dump];
     globalCombos = [NSMutableDictionary dictionary];
     int count = 0,limit = 20;
     // init associate

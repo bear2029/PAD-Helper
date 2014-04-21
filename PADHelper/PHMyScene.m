@@ -43,9 +43,11 @@
     PHMainButton *resetButton = [PHMainButton createWithText:@"reset" onScene:self atIndexOf:1];
     PHMainButton *randButton = [PHMainButton createWithText:@"random" onScene:self atIndexOf:0];
     PHMainButton *replayButton = [PHMainButton createWithText:@"replay" onScene:self atIndexOf:2];
+    PHMainButton *debugButton = [PHMainButton createWithText:@"debug" onScene:self atIndexOf:3];
     resetButton.delegateToMainScene = self;
     randButton.delegateToMainScene = self;
     replayButton.delegateToMainScene = self;
+    debugButton.delegateToMainScene = self;
     
     [self createTimer];
     
@@ -106,13 +108,16 @@
 }
 -(void)buttonClicked:(NSString *)text
 {
-    [board stopHighLighting];
     if([text isEqualToString:@"random"]){
         [board randomAssignColor];
+        [board stopHighLighting];
         [self hideIndication];
     }else if([text isEqualToString:@"reset"]){
+        [board stopHighLighting];
         [board undo];
         [self hideIndication];
+    }else if([text isEqualToString:@"debug"]){
+        [board dump];
     }
 }
 -(void)startPathWithOrb:(PHOrb*)orb andPosition:(CGPoint)point
@@ -177,9 +182,9 @@
 {
     CGPoint point = [[touches anyObject]locationInNode:self];
     NSArray *nodes = [self nodesAtPoint:point];
-    [board stopHighLighting];
     for (SKNode *node in nodes) {
         if(mode == sceneEditable && [node isKindOfClass:[PHOrb class]]){
+            [board stopHighLighting];
             PHOrb *orb = (PHOrb*)node;
             [self startPathWithOrb:orb andPosition:point];
             break;
@@ -203,13 +208,19 @@
             if(orb.isMoving || lastOrb.isMoving){
                 break;
             }
-            [board swapOrb1:lastOrb andOrb2:orb];
             
+            NSDictionary *pos1 = [board positionOfOrb:lastOrb];
+            int x1 = [[pos1 objectForKey:@"x"] intValue];
+            int y1 = [[pos1 objectForKey:@"y"] intValue];
+            NSDictionary *pos2 = [board positionOfOrb:orb];
+            int x2 = [[pos2 objectForKey:@"x"] intValue];
+            int y2 = [[pos2 objectForKey:@"y"] intValue];
+            if(abs(x1-x2)>1 ||abs(y1-y2)>1){
+                continue;
+            }
+            [board swapOrb1:lastOrb andOrb2:orb];
             // add to tracker
-            NSDictionary *pos = [board positionOfOrb:lastOrb];
-            int x = [[pos objectForKey:@"x"] intValue];
-            int y = [[pos objectForKey:@"y"] intValue];
-            [tracker addToPath:x andY:y];
+            [tracker addToPath:x2 andY:y2];
             break;
         }
         currentOrb.position = point;

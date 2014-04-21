@@ -95,12 +95,12 @@ const int kSelectedEditData = 1;
     orb1.isMoving = YES;
     orb2.isMoving = YES;
     [orb1 runAction:[SKAction sequence:@[
-                                         [SKAction moveTo:p2 duration:.1]
+                                         [SKAction moveTo:p2 duration:.05]
                                          ]] completion:^(void){
                                             orb1.isMoving = NO;
     }];
     [orb2 runAction:[SKAction sequence:@[
-                                         [SKAction moveTo:p1 duration:.1]
+                                         [SKAction moveTo:p1 duration:.05]
                                          ]] completion:^(void){
                                             orb2.isMoving = NO;
     }];
@@ -120,7 +120,7 @@ const int kSelectedEditData = 1;
         NSMutableArray *row = [orbs objectAtIndex:y];
         for (int x=0; x<[row count]; x++) {
             PHOrb *orb = [row objectAtIndex:x];
-            str = [NSString stringWithFormat:@"%@ %@",str,[orb.type substringToIndex:1]];
+            str = [NSString stringWithFormat:@"%@ %@",str,orb.type];
             if(x>=[row count]-1){
                 str = [NSString stringWithFormat:@"%@\n",str];
             }

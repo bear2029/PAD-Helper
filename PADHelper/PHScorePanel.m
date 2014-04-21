@@ -17,6 +17,8 @@
 
 -(id)init{
     self = [super init];
+    icons = [[NSMutableArray alloc]init];
+    colorLabels = [[NSMutableArray alloc]init];
     return self;
 }
 
@@ -30,6 +32,8 @@
     for (SKLabelNode *label in colorLabels) {
         [label removeFromParent];
     }
+    icons = [[NSMutableArray alloc]init];
+    colorLabels = [[NSMutableArray alloc]init];
 }
 -(void)displayScoreFromCombo:(NSMutableDictionary*)combos
 {
