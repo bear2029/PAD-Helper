@@ -12,7 +12,6 @@
 {
     int intBoard[6][5];
     int associate[30];
-    NSMutableDictionary *globalCombos;
 }
 -(void)setIntBoardFromOrbs:(NSMutableArray *)orbs
 {
@@ -27,7 +26,7 @@
 -(NSMutableDictionary*)calculateScore
 {
     //[self dump];
-    globalCombos = [NSMutableDictionary dictionary];
+    self.globalCombos = [NSMutableDictionary dictionary];
     int count = 0,limit = 20;
     // init associate
     for (int x=0; x<6; x++) {
@@ -54,16 +53,16 @@
         //NSLog(@"==================================================\n\n");
     } while ([self.combos count]);
     //NSLog(@"global %@",globalCombos);
-    return globalCombos;
+    return self.globalCombos;
 }
 -(void)mergeToGlobalCombos:(NSMutableDictionary*)newCombo
 {
     for (NSString *color in newCombo) {
-        NSMutableArray *globalCombosOfColor = [globalCombos objectForKey:color];
+        NSMutableArray *globalCombosOfColor = [self.globalCombos objectForKey:color];
         NSMutableArray *combosOfColor = [newCombo objectForKey:color];
         if(!globalCombosOfColor){ // init for that color in global combos
             globalCombosOfColor = [[NSMutableArray alloc]init];
-            [globalCombos setObject:globalCombosOfColor forKey:color];
+            [self.globalCombos setObject:globalCombosOfColor forKey:color];
         }
         for (NSMutableArray *combo in combosOfColor) {
             NSMutableArray *adjustedCombo = [[NSMutableArray alloc]init];

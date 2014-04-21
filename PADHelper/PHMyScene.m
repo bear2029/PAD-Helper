@@ -116,8 +116,33 @@
         [board stopHighLighting];
         [board undo];
         [self hideIndication];
-    }else if([text isEqualToString:@"debug"]){
+    }else if([text isEqualToString:@"replay"]){
+        [board stopHighLighting];
+        [board undo];
+        [self hideIndication];
+        NSMutableArray *path = [[tracker getTrack]mutableCopy];
+        [self replayRoutine:path onIndex:0 withPreviousOrb:nil];
+    }
+    else if([text isEqualToString:@"debug"]){
         [board dump];
+    }
+}
+-(void)replayRoutine:(NSMutableArray*)path onIndex:(int)index withPreviousOrb:(PHOrb*)previousOrb
+{
+    if([path count]>index){
+        NSDictionary *pos = [path objectAtIndex:index];
+        int x = [[pos objectForKey:@"x"] intValue];
+        int y = [[pos objectForKey:@"y"] intValue];
+        NSLog(@"pos:%@ => %d,%d",pos,x,y);
+        PHOrb *orb = [board orbFromX:x andY:y];
+        if(index>0){
+            NSLog(@"before swap");
+            [board swapOrb1:previousOrb andOrb2:orb onSuccess:^(void){
+                [self replayRoutine:path onIndex:index+1 withPreviousOrb:previousOrb];
+            }];
+        }else{
+            [self replayRoutine:path onIndex:index+1 withPreviousOrb:orb];
+        }
     }
 }
 -(void)startPathWithOrb:(PHOrb*)orb andPosition:(CGPoint)point

@@ -88,7 +88,7 @@ const int kSelectedEditData = 1;
         }
     }
 }
--(void)swapOrb1:(PHOrb*)orb1 andOrb2:(PHOrb*)orb2
+-(void)swapOrb1:(PHOrb *)orb1 andOrb2:(PHOrb *)orb2 onSuccess:(void(^)(void))onSuccess
 {
     CGPoint p1 = orb1.position;
     CGPoint p2 = orb2.position;
@@ -97,12 +97,15 @@ const int kSelectedEditData = 1;
     [orb1 runAction:[SKAction sequence:@[
                                          [SKAction moveTo:p2 duration:.05]
                                          ]] completion:^(void){
-                                            orb1.isMoving = NO;
+        orb1.isMoving = NO;
     }];
     [orb2 runAction:[SKAction sequence:@[
                                          [SKAction moveTo:p1 duration:.05]
                                          ]] completion:^(void){
-                                            orb2.isMoving = NO;
+        orb2.isMoving = NO;
+        if(onSuccess){
+            onSuccess();
+        }
     }];
     NSDictionary *index1 = [self positionOfOrb:orb1];
     NSDictionary *index2 = [self positionOfOrb:orb2];
@@ -112,6 +115,10 @@ const int kSelectedEditData = 1;
     int y2 = [[index2 objectForKey:@"y"] intValue];
     [[orbs objectAtIndex:y1] setObject:orb2 atIndex:x1];
     [[orbs objectAtIndex:y2]setObject:orb1 atIndex:x2];
+}
+-(void)swapOrb1:(PHOrb*)orb1 andOrb2:(PHOrb*)orb2
+{
+    [self swapOrb1:orb1 andOrb2:orb2 onSuccess:NULL];
 }
 -(void)dump
 {

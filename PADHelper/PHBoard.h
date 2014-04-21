@@ -18,6 +18,7 @@ extern const int kSelectedEditData;
 -(void)addOrb:(PHOrb*)orb OnBoardAt:(int)x andY:(int)y;
 -(void)randomAssignColor;
 -(void)undo;
+-(void)swapOrb1:(PHOrb *)orb1 andOrb2:(PHOrb *)orb2 onSuccess:(void(^)(void))onSuccess;
 -(void)swapOrb1:(PHOrb*)orb1 andOrb2:(PHOrb*)orb2;
 -(void)dump;
 -(PHOrb*)orbFromX:(int)x andY:(int)y;
