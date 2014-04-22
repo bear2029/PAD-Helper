@@ -125,7 +125,6 @@
         [board undo];
         NSMutableArray *path = [[tracker getTrack]mutableCopy];
         [self replayRoutine:path onIndex:0 withPreviousOrb:nil];
-        [indicationLine removeFromParent];
     }
     else if([text isEqualToString:@"debug"]){
         [board dump];

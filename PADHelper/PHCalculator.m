@@ -38,11 +38,11 @@
         self.combos = [[NSMutableDictionary alloc]init];
         [self calculateHorizontalScore];
         [self calculateVerticalScore];
+        NSLog(@"combos %@",self.combos);
+        [self dump];
         if([self.combos count]){
-            //[comboForAllLevels addObject:self.combos];
             [self mergeToGlobalCombos:self.combos];
             [self eliminateCombo];
-            //[self dumpAssociate];
         }else{
             break;
         }
@@ -141,6 +141,7 @@
         previousType = intBoard[0][y];
         for (int x=1; x<6; x++) {
             if(intBoard[x][y] == orbTypeEmpty){
+                previousType = intBoard[x][y];
                 continue;
             }
             bool isComboAtEndOfRow = intBoard[x][y] == previousType && x>=5 && count>=2;
@@ -212,6 +213,7 @@
     BOOL repeated = NO;
     for (int i=0; i<[colorCombos count]; i++) {
         NSMutableArray *colorCombo = colorCombos[i];
+        // intersection
         NSMutableSet *intersection = [NSMutableSet setWithArray:colorCombo];
         [intersection intersectSet:[NSSet setWithArray:combo]];
         if([intersection count]>0){
@@ -220,6 +222,26 @@
             colorCombos[i] = [intersection allObjects];
             repeated = YES;
             break;
+        }
+        // adjecent
+
+        for (NSNumber *n in combo) {
+            int pos = [n intValue];
+            int x = pos % 6;
+            int y = (pos - x) / 6;
+            for (NSNumber *_n in colorCombo) {
+                int _pos = [_n intValue];
+                int _x = _pos % 6;
+                int _y = (_pos - _x) / 6;
+                if(abs(x-_x)+abs(y-_y)<=1){
+                    repeated = YES;
+                    [colorCombo addObjectsFromArray:combo];
+                    break;
+                }
+            }
+            if(repeated){
+                break;
+            }
         }
     }
     if(!repeated){

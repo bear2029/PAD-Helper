@@ -129,7 +129,6 @@
 			isa = PBXGroup;
 			children = (
 				0B963B3B18F6792C00897A97 /* PADHelper */,
-				0B963B5F18F6792C00897A97 /* PADHelperTests */,
 				0B963B3218F6792C00897A97 /* Frameworks */,
 				0B963B3118F6792C00897A97 /* Products */,
 				0BCE49A5190645EF0000A4EE /* imageProcess */,
@@ -137,6 +136,8 @@
 				0BCE49A31906459F0000A4EE /* orbCalculation */,
 				0BCE49A2190645750000A4EE /* gameSceneUI */,
 				78DF137F1900E8EC00050D03 /* test1.png */,
+				0B2990F019011C0B00587615 /* PHMainButton.m */,
+				0B963B5F18F6792C00897A97 /* PADHelperTests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -210,7 +211,6 @@
 				0B963B4D18F6792C00897A97 /* PHMyScene.h */,
 				0B963B4E18F6792C00897A97 /* PHMyScene.m */,
 				0B2990EF19011C0B00587615 /* PHMainButton.h */,
-				0B2990F019011C0B00587615 /* PHMainButton.m */,
 				0B2990F119011C0B00587615 /* PHScorePanel.h */,
 				0B2990F219011C0B00587615 /* PHScorePanel.m */,
 			);

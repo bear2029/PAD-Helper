@@ -33,10 +33,10 @@
 -(void)testBoard1
 {
     PHBoard *board = [self createBoard:@[@[@"p",@"p",@"h",@"b",@"h",@"p"],
-                           @[@"y",@"r",@"h",@"y",@"h",@"y"],
-                           @[@"y",@"b",@"b",@"y",@"g",@"b"],
-                           @[@"r",@"p",@"p",@"b",@"g",@"r"],
-                           @[@"p",@"y",@"y",@"y",@"r",@"g"]]];
+                                         @[@"y",@"r",@"h",@"y",@"h",@"y"],
+                                         @[@"y",@"b",@"b",@"y",@"g",@"b"],
+                                         @[@"r",@"p",@"p",@"b",@"g",@"r"],
+                                         @[@"p",@"y",@"y",@"y",@"r",@"g"]]];
     NSString *expectedComboString = @"{\"Light\":[[25,26,27]],\"Water\":[[13,14,21]],\"Darkness\":[[24,19,20]]}";
     [self calculateBoard:board andExcpectJson:expectedComboString];
 }
@@ -48,7 +48,9 @@
                                          @[@"r",@"y",@"y",@"b",@"g",@"r"],
                                          @[@"h",@"y",@"p",@"y",@"r",@"g"]]];
     NSString *expectedComboString = @"{\"Water\":[[3,9,15,21]],\"Darkness\":[[0,14,2,1,8]],\"Heal\":[[4,10,16]]}";
-    [self calculateBoard:board andExcpectJson:expectedComboString];
+    NSMutableDictionary* combo = [board calculateScore];
+    NSString *comboString = [PADHelperTests toJsonString:combo];
+    XCTAssertEqualObjects(comboString,expectedComboString,@"elimination combo fail");
 }
 -(void)testBoard3
 {
@@ -59,6 +61,31 @@
                                          @[@"h",@"y",@"p",@"y",@"r",@"g"]]];
     NSString *expectedComboString = @"{\"Wood\":[[3,4,5]],\"Darkness\":[[0,1,2]]}";
     [self calculateBoard:board andExcpectJson:expectedComboString];
+}
+
+-(void)testBoard5
+{
+    PHBoard *board = [self createBoard:@[@[@"p",@"b",@"y",@"b",@"h",@"p"],
+                                         @[@"y",@"r",@"y",@"y",@"y",@"r"],
+                                         @[@"y",@"b",@"y",@"y",@"g",@"b"],
+                                         @[@"r",@"p",@"r",@"b",@"g",@"r"],
+                                         @[@"p",@"y",@"g",@"y",@"r",@"g"]]];
+    NSString *expectedComboString = @"{\"Light\":[[14,10,9,2,8]]}";
+    NSMutableDictionary* combo = [board calculateScore];
+    NSString *comboString = [PADHelperTests toJsonString:combo];
+    XCTAssertEqualObjects(comboString,expectedComboString,@"elimination combo fail");
+}
+-(void)testBoard4
+{
+    PHBoard *board = [self createBoard:@[@[@"p",@"p",@"p",@"h",@"g",@"g"],
+                                         @[@"h",@"p",@"p",@"p",@"h",@"y"],
+                                         @[@"p",@"r",@"b",@"r",@"b",@"b"],
+                                         @[@"y",@"r",@"y",@"p",@"r",@"p"],
+                                         @[@"h",@"y",@"p",@"y",@"r",@"g"]]];
+    NSString *expectedComboString = @"{\"Darkness\":[[0,1,2,7,8,9]]}";
+    NSMutableDictionary* combo = [board calculateScore];
+    NSString *comboString = [PADHelperTests toJsonString:combo];
+    XCTAssertEqualObjects(comboString,expectedComboString,@"elimination combo fail");
 }
 
 -(PHBoard *)createBoard:(NSArray*)arr

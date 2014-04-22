@@ -101,16 +101,16 @@ const int kSelectedEditData = 1;
     orb1.isMoving = YES;
     orb2.isMoving = YES;
     float duration = onSuccess ? .25 : .1;
-    [orb1 runAction:[SKAction sequence:@[[SKAction moveTo:p2 duration:duration]]] completion:^(void){
+    [orb1 runAction:[SKAction sequence:@[[SKAction moveTo:p2 duration:duration]]] completion:^(void)
+    {
         orb1.isMoving = NO;
         completeCount++;
         if(completeCount>1 && onSuccess){
             onSuccess();
         }
     }];
-
-    [orb2 runAction:[SKAction sequence:@[[SKAction moveTo:p1 duration:duration]]] completion:^(void){
-
+    [orb2 runAction:[SKAction sequence:@[[SKAction moveTo:p1 duration:duration]]] completion:^(void)
+    {
         orb2.isMoving = NO;
         completeCount++;
         if(completeCount>1 && onSuccess){
@@ -163,16 +163,22 @@ const int kSelectedEditData = 1;
 -(void)randomAssignColor
 {
     NSArray *names = @[@"p",@"r",@"h",@"y",@"b",@"g"];
-    for (int x=0; x<6; x++) {
-        for (int y=0; y<5; y++) {
-            if([colors count]<=x){
-                [colors insertObject:[[NSMutableArray alloc]init] atIndex:x];
+    NSMutableDictionary *combos;
+    do {
+        
+        for (int x=0; x<6; x++) {
+            for (int y=0; y<5; y++) {
+                if([colors count]<=x){
+                    [colors insertObject:[[NSMutableArray alloc]init] atIndex:x];
+                }
+                NSString *randName = [names objectAtIndex:arc4random()%[names count]];
+                [[colors objectAtIndex:x]insertObject:randName atIndex:y];
             }
-            NSString *randName = [names objectAtIndex:arc4random()%[names count]];
-            [[colors objectAtIndex:x]insertObject:randName atIndex:y];
         }
-    }
-    [self setColor];
+        [self setColor];
+        combos = [self calculateScore];
+        
+    } while ([combos count]);
 }
 
 @end
