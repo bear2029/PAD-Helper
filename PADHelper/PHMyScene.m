@@ -111,17 +111,21 @@
     if([text isEqualToString:@"random"]){
         [board randomAssignColor];
         [board stopHighLighting];
-        [self hideIndication];
+        mode = sceneEditable;
+        [indicationLine removeFromParent];
+        [scorePanel reset];
     }else if([text isEqualToString:@"reset"]){
         [board stopHighLighting];
         [board undo];
-        [self hideIndication];
+        mode = sceneEditable;
+        [indicationLine removeFromParent];
+        [scorePanel reset];
     }else if([text isEqualToString:@"replay"]){
         [board stopHighLighting];
         [board undo];
-        [self hideIndication];
         NSMutableArray *path = [[tracker getTrack]mutableCopy];
         [self replayRoutine:path onIndex:0 withPreviousOrb:nil];
+        [indicationLine removeFromParent];
     }
     else if([text isEqualToString:@"debug"]){
         [board dump];
@@ -133,19 +137,29 @@
         NSDictionary *pos = [path objectAtIndex:index];
         int x = [[pos objectForKey:@"x"] intValue];
         int y = [[pos objectForKey:@"y"] intValue];
-        NSLog(@"pos:%@ => %d,%d",pos,x,y);
         PHOrb *orb = [board orbFromX:x andY:y];
         if(index>0){
-            NSLog(@"before swap");
             [board swapOrb1:previousOrb andOrb2:orb onSuccess:^(void){
                 [self replayRoutine:path onIndex:index+1 withPreviousOrb:previousOrb];
             }];
         }else{
             [self replayRoutine:path onIndex:index+1 withPreviousOrb:orb];
         }
+    }else{
+        NSMutableDictionary *combos = [board calculateScore];
+        [self highLightWithCombo:combos];
     }
 }
--(void)startPathWithOrb:(PHOrb*)orb andPosition:(CGPoint)point
+-(void)startTimer
+{
+    countDownTimer = [NSTimer scheduledTimerWithTimeInterval:.01
+                                                      target:self
+                                                    selector:@selector(setTime:)
+                                                    userInfo:nil
+                                                     repeats:YES];
+}
+
+-(void)startPathWithOrb:(PHOrb*)orb andPosition:(CGPoint)point isResume:(BOOL)isResume
 {
     orb.alpha = .5;
     if(!currentOrb){
@@ -158,21 +172,16 @@
     currentOrb.linkedOrb = orb;
     [self addChild:currentOrb];
     mseconds = 0;
-    [self startTimer];
-    // create tracker
-    NSDictionary *pos = [board positionOfOrb:orb];
-    
-    int x = [[pos objectForKey:@"x"] intValue];
-    int y = [[pos objectForKey:@"y"] intValue];
-    [tracker createPathWithX:x andY:y fromBoard:board];
-}
--(void)startTimer
-{
-    countDownTimer = [NSTimer scheduledTimerWithTimeInterval:.01
-                                                      target:self
-                                                    selector:@selector(setTime:)
-                                                    userInfo:nil
-                                                     repeats:YES];
+    if(isResume){
+        //[self resumeTimer];
+    }else{
+        [self startTimer];
+        // create tracker
+        NSDictionary *pos = [board positionOfOrb:orb];
+        int x = [[pos objectForKey:@"x"] intValue];
+        int y = [[pos objectForKey:@"y"] intValue];
+        [tracker createPathWithX:x andY:y fromBoard:board];
+    }
 }
 -(void)showIndication
 {
@@ -197,22 +206,26 @@
     [indicationLine setStrokeColor:[UIColor redColor]];
     [self addChild:indicationLine];
 }
--(void)hideIndication
-{
-    mode = sceneEditable;
-    [indicationLine removeFromParent];
-    [scorePanel reset];
-}
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     CGPoint point = [[touches anyObject]locationInNode:self];
     NSArray *nodes = [self nodesAtPoint:point];
     for (SKNode *node in nodes) {
-        if(mode == sceneEditable && [node isKindOfClass:[PHOrb class]]){
-            [board stopHighLighting];
+        if([node isKindOfClass:[PHOrb class]]){
             PHOrb *orb = (PHOrb*)node;
-            [self startPathWithOrb:orb andPosition:point];
-            break;
+            if(mode == sceneIndication){
+                if(orb == [tracker getLastOrb]){
+                    mode = sceneEditable;
+                    [board stopHighLighting];
+                    [indicationLine removeFromParent];
+                    [self startPathWithOrb:orb andPosition:point isResume:YES];
+                    [scorePanel reset];
+                }
+            }else{
+                [board stopHighLighting];
+                [self startPathWithOrb:orb andPosition:point isResume:NO];
+                break;
+            }
         }
     }
 }
@@ -259,11 +272,16 @@
         [countDownTimer invalidate];
         NSMutableDictionary *combos = [board calculateScore];
         [scorePanel displayScoreFromCombo:combos];
-        // high light the last orb
-        PHOrb *lastOrb = [tracker getLastOrb];
-        [lastOrb glowSpecial];
         [self showIndication];
+        [self highLightWithCombo:combos];
     }
+}
+-(void)highLightWithCombo:(NSMutableDictionary*)combos
+{
+    [board highLightWithCombos:combos];
+    // high light the last orb
+    PHOrb *lastOrb = [tracker getLastOrb];
+    [lastOrb glowSpecial];
 }
 
 @end

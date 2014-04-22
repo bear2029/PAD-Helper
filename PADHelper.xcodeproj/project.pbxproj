@@ -52,15 +52,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0B13910418FF8D3400C6A531 /* PHBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHBoard.m; sourceTree = "<group>"; };
-		0B2990EF19011C0B00587615 /* PHMainButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHMainButton.h; sourceTree = "<group>"; };
-		0B2990F019011C0B00587615 /* PHMainButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHMainButton.m; sourceTree = "<group>"; };
-		0B2990F119011C0B00587615 /* PHScorePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHScorePanel.h; sourceTree = "<group>"; };
-		0B2990F219011C0B00587615 /* PHScorePanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHScorePanel.m; sourceTree = "<group>"; };
-		0B4FA8C51903BC320010532C /* PHPathTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHPathTracker.h; sourceTree = "<group>"; };
-		0B4FA8C61903BC320010532C /* PHPathTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHPathTracker.m; sourceTree = "<group>"; };
-		0B811C2818FE6F3000F30334 /* PHCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHCalculator.h; sourceTree = "<group>"; };
-		0B811C2918FE6F3000F30334 /* PHCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHCalculator.m; sourceTree = "<group>"; };
+		0B13910418FF8D3400C6A531 /* PHBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHBoard.m; path = PADHelper/PHBoard.m; sourceTree = "<group>"; };
+		0B2990EF19011C0B00587615 /* PHMainButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHMainButton.h; path = PADHelper/PHMainButton.h; sourceTree = "<group>"; };
+		0B2990F019011C0B00587615 /* PHMainButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHMainButton.m; path = PADHelper/PHMainButton.m; sourceTree = "<group>"; };
+		0B2990F119011C0B00587615 /* PHScorePanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHScorePanel.h; path = PADHelper/PHScorePanel.h; sourceTree = "<group>"; };
+		0B2990F219011C0B00587615 /* PHScorePanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHScorePanel.m; path = PADHelper/PHScorePanel.m; sourceTree = "<group>"; };
+		0B4FA8C51903BC320010532C /* PHPathTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHPathTracker.h; path = PADHelper/PHPathTracker.h; sourceTree = "<group>"; };
+		0B4FA8C61903BC320010532C /* PHPathTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHPathTracker.m; path = PADHelper/PHPathTracker.m; sourceTree = "<group>"; };
+		0B811C2818FE6F3000F30334 /* PHCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHCalculator.h; path = PADHelper/PHCalculator.h; sourceTree = "<group>"; };
+		0B811C2918FE6F3000F30334 /* PHCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHCalculator.m; path = PADHelper/PHCalculator.m; sourceTree = "<group>"; };
 		0B963B3018F6792C00897A97 /* PADHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PADHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B963B3318F6792C00897A97 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0B963B3518F6792C00897A97 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -75,8 +75,8 @@
 		0B963B4818F6792C00897A97 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0B963B4A18F6792C00897A97 /* PHViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PHViewController.h; sourceTree = "<group>"; };
 		0B963B4B18F6792C00897A97 /* PHViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PHViewController.m; sourceTree = "<group>"; };
-		0B963B4D18F6792C00897A97 /* PHMyScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PHMyScene.h; sourceTree = "<group>"; };
-		0B963B4E18F6792C00897A97 /* PHMyScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PHMyScene.m; sourceTree = "<group>"; };
+		0B963B4D18F6792C00897A97 /* PHMyScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PHMyScene.h; path = PADHelper/PHMyScene.h; sourceTree = "<group>"; };
+		0B963B4E18F6792C00897A97 /* PHMyScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PHMyScene.m; path = PADHelper/PHMyScene.m; sourceTree = "<group>"; };
 		0B963B5218F6792C00897A97 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		0B963B5818F6792C00897A97 /* PADHelperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PADHelperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B963B5918F6792C00897A97 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -90,14 +90,14 @@
 		0B963B7418F6795C00897A97 /* b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = b.png; sourceTree = "<group>"; };
 		0B963B7518F6795C00897A97 /* g.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = g.png; sourceTree = "<group>"; };
 		0B963B7D18F67A0900897A97 /* pad-bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "pad-bg.jpg"; sourceTree = "<group>"; };
-		0B963B7F18F6970000897A97 /* PHOrb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHOrb.h; sourceTree = "<group>"; };
-		0B963B8018F6970000897A97 /* PHOrb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHOrb.m; sourceTree = "<group>"; };
-		0B963B8218F6AACC00897A97 /* PHBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHBoard.h; sourceTree = "<group>"; };
+		0B963B7F18F6970000897A97 /* PHOrb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHOrb.h; path = PADHelper/PHOrb.h; sourceTree = "<group>"; };
+		0B963B8018F6970000897A97 /* PHOrb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHOrb.m; path = PADHelper/PHOrb.m; sourceTree = "<group>"; };
+		0B963B8218F6AACC00897A97 /* PHBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHBoard.h; path = PADHelper/PHBoard.h; sourceTree = "<group>"; };
 		78DF137F1900E8EC00050D03 /* test1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test1.png; sourceTree = "<group>"; };
-		78DF13811900E90100050D03 /* PHScreenParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHScreenParser.h; sourceTree = "<group>"; };
-		78DF13821900E90100050D03 /* PHScreenParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHScreenParser.m; sourceTree = "<group>"; };
-		78DF13831900E90100050D03 /* UIColorProcess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIColorProcess.h; sourceTree = "<group>"; };
-		78DF13841900E90100050D03 /* UIColorProcess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIColorProcess.m; sourceTree = "<group>"; };
+		78DF13811900E90100050D03 /* PHScreenParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PHScreenParser.h; path = PADHelper/PHScreenParser.h; sourceTree = "<group>"; };
+		78DF13821900E90100050D03 /* PHScreenParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PHScreenParser.m; path = PADHelper/PHScreenParser.m; sourceTree = "<group>"; };
+		78DF13831900E90100050D03 /* UIColorProcess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIColorProcess.h; path = PADHelper/UIColorProcess.h; sourceTree = "<group>"; };
+		78DF13841900E90100050D03 /* UIColorProcess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIColorProcess.m; path = PADHelper/UIColorProcess.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,13 +132,10 @@
 				0B963B5F18F6792C00897A97 /* PADHelperTests */,
 				0B963B3218F6792C00897A97 /* Frameworks */,
 				0B963B3118F6792C00897A97 /* Products */,
-				0B963B6F18F6795C00897A97 /* p.png */,
-				0B963B7018F6795C00897A97 /* r.png */,
-				0B963B7118F6795C00897A97 /* h.png */,
-				0B963B7218F6795C00897A97 /* y.png */,
-				0B963B7418F6795C00897A97 /* b.png */,
-				0B963B7518F6795C00897A97 /* g.png */,
-				0B963B7D18F67A0900897A97 /* pad-bg.jpg */,
+				0BCE49A5190645EF0000A4EE /* imageProcess */,
+				0BCE49A4190645D50000A4EE /* assets */,
+				0BCE49A31906459F0000A4EE /* orbCalculation */,
+				0BCE49A2190645750000A4EE /* gameSceneUI */,
 				78DF137F1900E8EC00050D03 /* test1.png */,
 			);
 			sourceTree = "<group>";
@@ -172,24 +169,6 @@
 				0B963B4718F6792C00897A97 /* Main.storyboard */,
 				0B963B4A18F6792C00897A97 /* PHViewController.h */,
 				0B963B4B18F6792C00897A97 /* PHViewController.m */,
-				0B963B4D18F6792C00897A97 /* PHMyScene.h */,
-				0B963B4E18F6792C00897A97 /* PHMyScene.m */,
-				0B4FA8C51903BC320010532C /* PHPathTracker.h */,
-				0B4FA8C61903BC320010532C /* PHPathTracker.m */,
-				0B963B8218F6AACC00897A97 /* PHBoard.h */,
-				0B13910418FF8D3400C6A531 /* PHBoard.m */,
-				0B811C2818FE6F3000F30334 /* PHCalculator.h */,
-				0B811C2918FE6F3000F30334 /* PHCalculator.m */,
-				78DF13811900E90100050D03 /* PHScreenParser.h */,
-				78DF13821900E90100050D03 /* PHScreenParser.m */,
-				78DF13831900E90100050D03 /* UIColorProcess.h */,
-				0B2990EF19011C0B00587615 /* PHMainButton.h */,
-				0B2990F019011C0B00587615 /* PHMainButton.m */,
-				0B2990F119011C0B00587615 /* PHScorePanel.h */,
-				0B2990F219011C0B00587615 /* PHScorePanel.m */,
-				78DF13841900E90100050D03 /* UIColorProcess.m */,
-				0B963B7F18F6970000897A97 /* PHOrb.h */,
-				0B963B8018F6970000897A97 /* PHOrb.m */,
 				0B963B5218F6792C00897A97 /* Images.xcassets */,
 				0B963B3C18F6792C00897A97 /* Supporting Files */,
 			);
@@ -223,6 +202,59 @@
 				0B963B6218F6792C00897A97 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0BCE49A2190645750000A4EE /* gameSceneUI */ = {
+			isa = PBXGroup;
+			children = (
+				0B963B4D18F6792C00897A97 /* PHMyScene.h */,
+				0B963B4E18F6792C00897A97 /* PHMyScene.m */,
+				0B2990EF19011C0B00587615 /* PHMainButton.h */,
+				0B2990F019011C0B00587615 /* PHMainButton.m */,
+				0B2990F119011C0B00587615 /* PHScorePanel.h */,
+				0B2990F219011C0B00587615 /* PHScorePanel.m */,
+			);
+			name = gameSceneUI;
+			sourceTree = "<group>";
+		};
+		0BCE49A31906459F0000A4EE /* orbCalculation */ = {
+			isa = PBXGroup;
+			children = (
+				0B4FA8C51903BC320010532C /* PHPathTracker.h */,
+				0B4FA8C61903BC320010532C /* PHPathTracker.m */,
+				0B963B8218F6AACC00897A97 /* PHBoard.h */,
+				0B13910418FF8D3400C6A531 /* PHBoard.m */,
+				0B811C2818FE6F3000F30334 /* PHCalculator.h */,
+				0B811C2918FE6F3000F30334 /* PHCalculator.m */,
+				0B963B7F18F6970000897A97 /* PHOrb.h */,
+				0B963B8018F6970000897A97 /* PHOrb.m */,
+			);
+			name = orbCalculation;
+			sourceTree = "<group>";
+		};
+		0BCE49A4190645D50000A4EE /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				0B963B6F18F6795C00897A97 /* p.png */,
+				0B963B7018F6795C00897A97 /* r.png */,
+				0B963B7118F6795C00897A97 /* h.png */,
+				0B963B7218F6795C00897A97 /* y.png */,
+				0B963B7418F6795C00897A97 /* b.png */,
+				0B963B7518F6795C00897A97 /* g.png */,
+				0B963B7D18F67A0900897A97 /* pad-bg.jpg */,
+			);
+			name = assets;
+			sourceTree = "<group>";
+		};
+		0BCE49A5190645EF0000A4EE /* imageProcess */ = {
+			isa = PBXGroup;
+			children = (
+				78DF13811900E90100050D03 /* PHScreenParser.h */,
+				78DF13821900E90100050D03 /* PHScreenParser.m */,
+				78DF13831900E90100050D03 /* UIColorProcess.h */,
+				78DF13841900E90100050D03 /* UIColorProcess.m */,
+			);
+			name = imageProcess;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

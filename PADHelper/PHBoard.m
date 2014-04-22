@@ -60,24 +60,23 @@ const int kSelectedEditData = 1;
 {
     [calculator setIntBoardFromOrbs:orbs];
     NSMutableDictionary *combos = [calculator calculateScore];
-    [self highLightWithCombos:combos];
     return combos;
 }
 -(void)highLightWithCombos:(NSMutableDictionary *)allCombos
 {
-        for (NSString *color in allCombos) {
-            NSMutableArray *combosOfColor = [allCombos objectForKey:color];// combos list for each color
-            for (NSMutableArray *combos in combosOfColor) { // each combo for the color
-                for (NSNumber *n in combos) {
-                    int i = [n floatValue];
-                    int y = ceilf(i/6);
-                    int x = i%6;
-                    PHOrb *orb = [[orbs objectAtIndex:y]objectAtIndex:x];
-                    [orb glow];
-                    orb.alpha = .8;
-                }
+    for (NSString *color in allCombos) {
+        NSMutableArray *combosOfColor = [allCombos objectForKey:color];// combos list for each color
+        for (NSMutableArray *combos in combosOfColor) { // each combo for the color
+            for (NSNumber *n in combos) {
+                int i = [n floatValue];
+                int y = ceilf(i/6);
+                int x = i%6;
+                PHOrb *orb = [[orbs objectAtIndex:y]objectAtIndex:x];
+                [orb glow];
+                orb.alpha = .8;
             }
         }
+    }
 }
 -(void)stopHighLighting
 {
@@ -92,27 +91,32 @@ const int kSelectedEditData = 1;
 {
     CGPoint p1 = orb1.position;
     CGPoint p2 = orb2.position;
-    orb1.isMoving = YES;
-    orb2.isMoving = YES;
-    [orb1 runAction:[SKAction sequence:@[
-                                         [SKAction moveTo:p2 duration:.05]
-                                         ]] completion:^(void){
-        orb1.isMoving = NO;
-    }];
-    [orb2 runAction:[SKAction sequence:@[
-                                         [SKAction moveTo:p1 duration:.05]
-                                         ]] completion:^(void){
-        orb2.isMoving = NO;
-        if(onSuccess){
-            onSuccess();
-        }
-    }];
+    __block int completeCount = 0;
     NSDictionary *index1 = [self positionOfOrb:orb1];
     NSDictionary *index2 = [self positionOfOrb:orb2];
     int x1 = [[index1 objectForKey:@"x"] intValue];
     int y1 = [[index1 objectForKey:@"y"] intValue];
     int x2 = [[index2 objectForKey:@"x"] intValue];
     int y2 = [[index2 objectForKey:@"y"] intValue];
+    orb1.isMoving = YES;
+    orb2.isMoving = YES;
+    float duration = onSuccess ? .25 : .1;
+    [orb1 runAction:[SKAction sequence:@[[SKAction moveTo:p2 duration:duration]]] completion:^(void){
+        orb1.isMoving = NO;
+        completeCount++;
+        if(completeCount>1 && onSuccess){
+            onSuccess();
+        }
+    }];
+
+    [orb2 runAction:[SKAction sequence:@[[SKAction moveTo:p1 duration:duration]]] completion:^(void){
+
+        orb2.isMoving = NO;
+        completeCount++;
+        if(completeCount>1 && onSuccess){
+            onSuccess();
+        }
+    }];
     [[orbs objectAtIndex:y1] setObject:orb2 atIndex:x1];
     [[orbs objectAtIndex:y2]setObject:orb1 atIndex:x2];
 }
