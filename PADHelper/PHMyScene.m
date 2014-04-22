@@ -145,10 +145,15 @@
                 [self replayRoutine:path onIndex:index+1 withPreviousOrb:previousOrb];
             }];
         }else{
+            [orb setScale:1.2];
+            orb.zPosition = 3;
             [self replayRoutine:path onIndex:index+1 withPreviousOrb:orb];
         }
     }else{
         NSMutableDictionary *combos = [board calculateScore];
+        PHOrb *orb = [tracker getLastOrb];
+        [orb setScale:1.0];
+        orb.zPosition = 1;
         [self highLightWithCombo:combos];
     }
 }
