@@ -7,7 +7,6 @@
 //
 
 #import "PHViewController.h"
-#import "PHMyScene.h"
 #import "PHScreenParser.h"
 
 @implementation PHViewController
@@ -16,17 +15,34 @@
 {
     [super viewDidLoad];
     
+    
     // Configure the view.
     SKView * skView = (SKView *)self.view;
-    skView.showsFPS = YES;
-    skView.showsNodeCount = YES;
+    [[self navigationController]setNavigationBarHidden:YES];
+    //skView.showsNodeCount = YES;
         
     // Create and configure the scene.
-    SKScene * scene = [PHMyScene sceneWithSize:skView.bounds.size];
+    PHMyScene * scene = [PHMyScene sceneWithSize:skView.bounds.size];
     scene.scaleMode = SKSceneScaleModeAspectFill;
+    scene.delegateToVc = self;
     
     // Present the scene.
     [skView presentScene:scene];
+}
+-(void)viewDidAppear:(BOOL)animated
+{
+    [[self navigationController]setNavigationBarHidden:YES animated:YES];
+}
+-(void)historyClicked
+{
+    [self performSegueWithIdentifier:@"openHistorySegue" sender:self];
+}
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier]isEqualToString:@"openHistorySegue"]) {
+        PHHistoryVc *vc = [segue destinationViewController];
+        [vc testPass:@"bear"];
+    }
 }
 
 - (BOOL)shouldAutorotate

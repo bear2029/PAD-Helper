@@ -38,8 +38,6 @@
         self.combos = [[NSMutableDictionary alloc]init];
         [self calculateHorizontalScore];
         [self calculateVerticalScore];
-        NSLog(@"combos %@",self.combos);
-        [self dump];
         if([self.combos count]){
             [self mergeToGlobalCombos:self.combos];
             [self eliminateCombo];

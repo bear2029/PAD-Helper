@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import <SpriteKit/SpriteKit.h>
+#import "PHMyScene.h"
+#import "PHHistoryVc.h"
 
-@interface PHViewController : UIViewController
+@interface PHViewController : UIViewController<DelegateToVc>
+-(void)historyClicked;
 
 @end

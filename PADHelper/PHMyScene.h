@@ -18,6 +18,14 @@ typedef enum sceneModes {
     sceneIndication = 2
 } SceneModes;
 
+@protocol DelegateToVc;
+
 @interface PHMyScene : SKScene<DelegateToMainScene>
 
+@property id<DelegateToVc> delegateToVc;
+
+@end
+
+@protocol DelegateToVc <NSObject>
+-(void)historyClicked;
 @end

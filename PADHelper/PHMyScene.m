@@ -44,10 +44,12 @@
     PHMainButton *randButton = [PHMainButton createWithText:@"random" onScene:self atIndexOf:0];
     PHMainButton *replayButton = [PHMainButton createWithText:@"replay" onScene:self atIndexOf:2];
     PHMainButton *debugButton = [PHMainButton createWithText:@"debug" onScene:self atIndexOf:3];
+    PHMainButton *historyButton = [PHMainButton createWithText:@"history" onScene:self atIndexOf:3];
     resetButton.delegateToMainScene = self;
     randButton.delegateToMainScene = self;
     replayButton.delegateToMainScene = self;
     debugButton.delegateToMainScene = self;
+    historyButton.delegateToMainScene = self;
     
     [self createTimer];
     
@@ -125,9 +127,10 @@
         [board undo];
         NSMutableArray *path = [[tracker getTrack]mutableCopy];
         [self replayRoutine:path onIndex:0 withPreviousOrb:nil];
-    }
-    else if([text isEqualToString:@"debug"]){
+    }else if([text isEqualToString:@"debug"]){
         [board dump];
+    }else if([text isEqualToString:@"history"]){
+        [self.delegateToVc historyClicked];
     }
 }
 -(void)replayRoutine:(NSMutableArray*)path onIndex:(int)index withPreviousOrb:(PHOrb*)previousOrb
